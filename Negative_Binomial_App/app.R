@@ -1,6 +1,8 @@
 library(shiny)
 library(bslib)
 library(ggplot2)
+library(plotly)
+
 
 
 ui <- fluidPage(
@@ -19,23 +21,25 @@ ui <- fluidPage(
         class = "container",
         h1("Numărul de eșecuri înainte de a obține un număr fix de succese (r)"),
         div(
-          class = "d-flex justify-content-center",
-          img(
-            src = "https://wikimedia.org/api/rest_v1/media/math/render/svg/1a26b86be5f29ff5c8455dd3f357faeb8aaed623",
-            style = "filter: invert(1);height:4vh;"
+            class = "d-flex justify-content-center",
+            img(
+              src = "https://wikimedia.org/api/rest_v1/media/math/render/svg/1a26b86be5f29ff5c8455dd3f357faeb8aaed623",
+              style = "filter: invert(1);height:4vh;"
+            ),
+            img(
+              src = "https://wikimedia.org/api/rest_v1/media/math/render/svg/29944ccb6e33fb4970c050a4cc81f3b4ca9aa5b1",
+              style = "filter: invert(1);height:4vh;"
+            )
           ),
-          img(
-            src = "https://wikimedia.org/api/rest_v1/media/math/render/svg/29944ccb6e33fb4970c050a4cc81f3b4ca9aa5b1",
-            style = "filter: invert(1);height:4vh;"
-          )
-        ),
         div(
           class = "row",
           div(
             class = "col-4",
             tags$h3("Input:"),
             sliderInput("r", "Numărul de succese (r):", min = 1, max = 50, value = 10, step = 1),
-            sliderInput("p", "Probabilitatea de succes (p):", min = 0.01, max = 1, value = 0.5, step = 0.01)
+            checkboxInput("fix_r", "Fixează r", value = TRUE),
+            sliderInput("p", "Probabilitatea de succes (p):", min = 0.01, max = 1, value = 0.5, step = 0.01),
+            checkboxInput("fix_p", "Fixează p", value = FALSE)
           ),
           div(
             class = "col-8",
@@ -45,6 +49,7 @@ ui <- fluidPage(
           )
         )
       )
+    
     ),
     tabPanel(
       "Formularea 2",
@@ -181,15 +186,65 @@ ui <- fluidPage(
   )
 )
 
-server <- function(input, output) {
-  # Reprezentare funcția de masă
-  output$mass_function_plot <- renderPlot({
-    x <- 0:100
-    y <- dnbinom(x, size = input$r, prob = input$p)
-    df <- data.frame(Eșecuri = x, Probabilitate = y)
+server <- function(input, output, session) {
+  # Reactive values pentru animație (initializează fără `input$r`)
+  rv <- reactiveValues(current_r = 10, current_p = 0.5)
+  r_value <- reactive({
+    if (input$fix_r) input$r else rv$current_r
+  })
+  
+  p_value <- reactive({
+    if (input$fix_p) input$p else rv$current_p
+  })
+  # observeEvent e ca un trigger cu parametrii:
+  # evenimentul ce trebuie urmarit, codul care se va executra cand expresia se modifica
+  # nu permitem sa fie ambele casute debifatezx
+  observeEvent(input$fix_r, {
+    if (!input$fix_r && !input$fix_p) {
+      updateCheckboxInput(session, "fix_p", value = TRUE)
+    }
+  })
+  
+  observeEvent(input$fix_p, {
+    if (!input$fix_r && !input$fix_p) {
+      updateCheckboxInput(session, "fix_r", value = TRUE)
+    }
+  })
+  
+  observe({
+    invalidateLater(500, session)# expresia reactiva care activeaza observe
     
-    ggplot(df, aes(x = Eșecuri, y = Probabilitate)) +
-      geom_bar(stat = "identity", fill = "#E69F00", alpha = 0.8) +
+    #folosim isolate pentru a nu avea reactivitate extra
+    #adica modificam valorile fara a declansa o reactie dupa modificare
+    isolate({
+      if (!input$fix_r) {
+        rv$current_r <- rv$current_r + 0.5
+        if (rv$current_r > 50) rv$current_r <- 1
+      }
+      
+      if (!input$fix_p) {
+        rv$current_p <- rv$current_p + 0.01
+        if (rv$current_p > 1) rv$current_p <- 0.01
+      }
+    })
+  })
+  
+  #renderPlot genereaza graficul functiei de masa
+  output$mass_function_plot <- renderPlot({
+    #functiile de extragere a parametrilor
+    r <- r_value()
+    p <- p_value()
+    
+    x <- 0:100 # nr de esecuri posibile inainte de a obtine cele r succese
+    y <- dnbinom(x, size = r, prob = p) # functia de masa a probabilitatilor pt nb
+    # x e numarul de esecuri
+    # size e numarul de succese dorite
+    # prob e prob de succes pt fiecare incercare
+    # y e un vector de probabilitati de succes la fiecare incercare
+    dataframe <- data.frame(Eșecuri = x, Probabilitate = y)
+    
+    ggplot(dataframe, aes(x = Eșecuri, y = Probabilitate)) +
+      geom_bar(stat = "identity", fill = "#E69F00", alpha = 0.8) + # grafic cu bare verticale
       theme_minimal(base_family = "Inconsolata") +
       labs(
         title = "Funcția de masă (PMF)",
@@ -204,11 +259,16 @@ server <- function(input, output) {
         axis.title = element_text(color = "#FFF")
       )
   })
-
+  
   # Reprezentare funcția de repartiție
   output$cdf_function_plot <- renderPlot({
+    r <- r_value()
+    p <- p_value()
+    
     x <- 0:100
-    y <- pnbinom(x, size = input$r, prob = input$p)
+    y <- pnbinom(x, size = r, prob = p) # P(X<=x) pt toate val lui x
+    # size e numarul de succese
+    # prob e probabilitatea de succes
     df <- data.frame(Eșecuri = x, Probabilitate_Cumulată = y)
     
     ggplot(df, aes(x = Eșecuri, y = Probabilitate_Cumulată)) +
