@@ -19,7 +19,7 @@ ui <- fluidPage(
       "Formularea 1",
       div(
         class = "container",
-        h1("Numărul de eșecuri înainte de a obține un număr fix de succese (r)"),
+        h1("Numarul de eșecuri inainte de a obține un numar fix de succese (r)"),
         div(
             class = "d-flex justify-content-center",
             img(
@@ -36,14 +36,14 @@ ui <- fluidPage(
           div(
             class = "col-4",
             tags$h3("Input:"),
-            sliderInput("r", "Numărul de succese (r):", min = 1, max = 50, value = 10, step = 1),
-            checkboxInput("fix_r", "Fixează r", value = TRUE),
+            sliderInput("r", "Numarul de succese (r):", min = 1, max = 50, value = 10, step = 1),
+            checkboxInput("fix_r", "Fixeaza r", value = TRUE),
             sliderInput("p", "Probabilitatea de succes (p):", min = 0.01, max = 1, value = 0.5, step = 0.01),
-            checkboxInput("fix_p", "Fixează p", value = FALSE)
+            checkboxInput("fix_p", "Fixeaza p", value = FALSE)
           ),
           div(
             class = "col-8",
-            h4("Reprezentare Grafică"),
+            h4("Reprezentare Grafica"),
             plotOutput("mass_function_plot"),
             plotOutput("cdf_function_plot")
           )
@@ -55,7 +55,7 @@ ui <- fluidPage(
       "Formularea 2",
       div(
         class = "container",
-        h1("Numărul total de încercări necesare pentru a obține un număr fix de succese (r)"),
+        h1("Numarul total de incercari necesare pentru a obține un numar fix de succese (r)"),
         div(
             class="d-flex justify-content-center",
             img(
@@ -88,7 +88,7 @@ ui <- fluidPage(
       "Formularea 3",
       div(
         class = "container",
-        h1("Numărul total de încercări necesare pentru a obține un număr fix de eșecuri (r)"),
+        h1("Numarul total de incercari necesare pentru a obține un numar fix de eșecuri (r)"),
         div(
             class="d-flex justify-content-center",
             img(
@@ -121,7 +121,7 @@ ui <- fluidPage(
       "Formularea 4",
       div(
         class = "container",
-        h1("Numărul de succese înainte de a obține un număr fix de eșecuri (r)"),
+        h1("Numarul de succese inainte de a obține un numar fix de eșecuri (r)"),
         div(
             class="d-flex justify-content-center",
             img(
@@ -154,7 +154,7 @@ ui <- fluidPage(
       "Formularea 5",
       div(
         class = "container",
-        h1("Numărul de succese într-un număr fix de încercări (n)"),
+        h1("Numarul de succese intr-un numar fix de incercari (n)"),
         div(
             class="d-flex justify-content-center",
             img(
@@ -187,7 +187,7 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-  # Reactive values pentru animație (initializează fără `input$r`)
+  # Reactive values pentru animație (initializeaza fara `input$r`)
   rv <- reactiveValues(current_r = 10, current_p = 0.5)
   r_value <- reactive({
     if (input$fix_r) input$r else rv$current_r
@@ -241,14 +241,14 @@ server <- function(input, output, session) {
     # size e numarul de succese dorite
     # prob e prob de succes pt fiecare incercare
     # y e un vector de probabilitati de succes la fiecare incercare
-    dataframe <- data.frame(Eșecuri = x, Probabilitate = y)
+    dataframe <- data.frame(Esecuri = x, Probabilitate = y)
     
-    ggplot(dataframe, aes(x = Eșecuri, y = Probabilitate)) +
+    ggplot(dataframe, aes(x = Esecuri, y = Probabilitate)) +
       geom_bar(stat = "identity", fill = "#E69F00", alpha = 0.8) + # grafic cu bare verticale
       theme_minimal(base_family = "Inconsolata") +
       labs(
-        title = "Funcția de masă (PMF)",
-        x = "Numărul de eșecuri",
+        title = "Funcția de masa (PMF)",
+        x = "Numarul de eșecuri",
         y = "Probabilitate"
       ) +
       theme(
@@ -269,15 +269,15 @@ server <- function(input, output, session) {
     y <- pnbinom(x, size = r, prob = p) # P(X<=x) pt toate val lui x
     # size e numarul de succese
     # prob e probabilitatea de succes
-    df <- data.frame(Eșecuri = x, Probabilitate_Cumulată = y)
+    df <- data.frame(Esecuri = x, Probabilitate_Cumulata = y)
     
-    ggplot(df, aes(x = Eșecuri, y = Probabilitate_Cumulată)) +
+    ggplot(df, aes(x = Esecuri, y = Probabilitate_Cumulata)) +
       geom_line(color = "#E69F00", size = 1.5) +
       theme_minimal(base_family = "Inconsolata") +
       labs(
-        title = "Funcția de repartiție cumulativă (CDF)",
-        x = "Numărul de eșecuri",
-        y = "Probabilitate Cumulată"
+        title = "Funcția de repartiție cumulativa (CDF)",
+        x = "Numarul de eșecuri",
+        y = "Probabilitate Cumulata"
       ) +
       theme(
         text = element_text(color = "#FFF"),
