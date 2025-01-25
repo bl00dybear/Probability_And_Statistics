@@ -3,5 +3,5 @@ source("utils.R")
 source("ui.R")
 source("server/server.R")
 
-
-shinyApp(ui = ui, server = server)
+# run on specific port
+shinyApp(ui = ui, server = server, options = list(port = 1234))

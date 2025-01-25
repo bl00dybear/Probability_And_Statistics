@@ -38,16 +38,17 @@ create_tab <- function(tab_title, title, img1_src, img2_src, distribution) {
         div(
           class = "col-8",
           h4("Reprezentare Grafică"),
+          get_output_distribution(distribution)
 
-          # switch pentru a selecta tipul de distributie
-          switch(
-            distribution,
-            NORMALA_STANDARD = plotOutput("norm_std_server"),
-            NORMALA = textOutput("norm_server"),
-            BINOMIALA = textOutput("binom_server"),
-            EXPONENTIALA = textOutput("exp_server"),
-            POISSON = textOutput("pois_server")
-          ),
+          # # switch pentru a selecta tipul de distributie
+          # switch(
+          #   distribution,
+          #   NORMALA_STANDARD = plotOutput("norm_std_server"),
+          #   NORMALA = textOutput("norm_server"),
+          #   BINOMIALA = textOutput("binom_server"),
+          #   EXPONENTIALA = textOutput("exp_server"),
+          #   POISSON = textOutput("pois_server")
+          # ),
 
         )
       )
