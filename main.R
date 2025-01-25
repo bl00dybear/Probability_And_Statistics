@@ -28,13 +28,17 @@ create_tab <- function(tab_title, title, img1_src, img2_src, tab_number) {
         div(
           class = "col-8",
           h4("Reprezentare Grafică"),
-          plotOutput(outputId = paste0("mass_function_plot_", tab_number)),
-          plotOutput(outputId = paste0("cdf_function_plot_", tab_number))
+          div(
+            style = "border: 1px solid #E69F00; padding: 10px; margin-bottom: 10px;",
+            plotOutput(outputId = paste0("mass_function_plot_", tab_number)),
+            )
         )
       )
     )
   )
 }
+
+
 
 
 # Funcție pentru actualizarea valorilor reactive și animație
@@ -74,152 +78,124 @@ create_reactive_values <- function(input, session, suffix) {
   list(r_value = r_value, p_value = p_value, rv = rv)
 }
 
+render_plot <- function(df,scaling_factor) {
+  ggplot(df, aes(x = x)) +
+      geom_bar(aes(y = pmf), stat = "identity", fill = "#E69F00", alpha = 0.8, width = 0.8) +
+      geom_step(aes(y = cmf * scaling_factor), color = "#56B4E9", size = 1.2) +
+      theme_minimal(base_family = "Inconsolata") +
+      labs(title = "PMF și CMF pentru Distribuția Binomială Negativă", x = "", y = "Probabilitate (PMF)") +
+      scale_y_continuous(sec.axis = sec_axis(~ . / scaling_factor, name = "Probabilitate Cumulativă (CMF)")) +
+      theme(text = element_text(color = "#000"),plot.background = element_rect(fill = "#FFF"),panel.background = element_rect(fill = "#FFF"),axis.text = element_text(color = "#000"),axis.title = element_text(color = "#000"),axis.title.y.right = element_text(color = "#56B4E9"),axis.text.y.right = element_text(color = "#56B4E9"),panel.border = element_blank(),aspect.ratio = 0.5)
+}
+
+negative_binomial_pmf_1 <- function(k, r, p) {
+  binomial_coefficient <- choose(k + r - 1, k)
+  probability <- binomial_coefficient * p^r * (1 - p)^k
+  return(probability)
+}
+
 # Funcție pentru generarea graficului
-render_plot_1 <- function(r_value, p_value, plot_type) {
+render_plot_1 <- function(r_value, p_value) {
   renderPlot({
     r <- r_value()
     p <- p_value()
     x <- 0:100
 
-    if (plot_type == "PMF") {
-      y <- dnbinom(x, size = r, prob = p)
-      df <- data.frame(Eșecuri = x, Probabilitate = y)
-      
-      ggplot(df, aes(x = Eșecuri, y = Probabilitate)) +
-        geom_bar(stat = "identity", fill = "#E69F00", alpha = 0.8) +
-        theme_minimal(base_family = "Inconsolata") +
-        labs(title = "Funcția de masă (PMF)", x = "Numărul de eșecuri", y = "Probabilitate")+
-        theme(text = element_text(color = "#FFF"),plot.background = element_rect(fill = "#101010"),panel.background = element_rect(fill = "#101010"),axis.text = element_text(color = "#FFF"),axis.title = element_text(color = "#FFF"))
-    } else {
-      y <- pnbinom(x, size = r, prob = p)
-      df <- data.frame(Eșecuri = x, Probabilitate_Cumulată = y)
-      
-      ggplot(df, aes(x = Eșecuri, y = Probabilitate_Cumulată)) +
-        geom_line(color = "#E69F00", size = 1.5) +
-        theme_minimal(base_family = "Inconsolata") +
-        labs(title = "Funcția de repartiție cumulativă (CDF)", x = "Numărul de eșecuri", y = "Probabilitate Cumulată")+
-        theme(text = element_text(color = "#FFF"),plot.background = element_rect(fill = "#101010"),panel.background = element_rect(fill = "#101010"),axis.text = element_text(color = "#FFF"),axis.title = element_text(color = "#FFF"))
-    }
+    pmf_values <- sapply(x, function(k) negative_binomial_pmf_1(k, r, p))
+    cmf_values <- cumsum(pmf_values)
+
+    df <- data.frame(x = x, pmf = pmf_values, cmf = cmf_values)
+    scaling_factor <- max(df$pmf) / max(df$cmf)
+
+    render_plot(df, scaling_factor)
+})
+}
+
+negative_binomial_pmf_2 <- function(n, r, p) {
+  binomial_coefficient <- choose(n-1, r-1)
+  probability <- binomial_coefficient * p^r * (1 - p)^(n-r)
+  return(probability)
+}
+
+render_plot_2 <- function(r_value, p_value) {
+  renderPlot({
+    r <- r_value()
+    p <- p_value()
+    x <- r:100
+
+    pmf_values <- sapply(x, function(k) negative_binomial_pmf_2(k, r, p))
+    cmf_values <- cumsum(pmf_values)
+
+    df <- data.frame(x = x, pmf = pmf_values, cmf = cmf_values)
+    scaling_factor <- max(df$pmf) / max(df$cmf)
+
+    render_plot(df, scaling_factor)
+    })
+}
+
+negative_binomial_pmf_3 <- function(n, r, p) {
+  binomial_coefficient <- choose(n-1, r-1)
+  probability <- binomial_coefficient * p^(n-r) * (1 - p)^r
+  return(probability)
+}
+
+render_plot_3 <- function(r_value, p_value) {
+  renderPlot({
+    r <- r_value()
+    p <- p_value()
+    x <- r:100
+
+    pmf_values <- sapply(x, function(k) negative_binomial_pmf_1(k, r, p))
+    cmf_values <- cumsum(pmf_values)
+
+    df <- data.frame(x = x, pmf = pmf_values, cmf = cmf_values)
+    scaling_factor <- max(df$pmf) / max(df$cmf)
+
+    render_plot(df, scaling_factor)
   })
 }
 
-render_plot_2 <- function(r_value, p_value, plot_type) {
+negative_binomial_pmf_4 <- function(k, r, p) {
+  binomial_coefficient <- choose(k+r-1, k)
+  probability <- binomial_coefficient * p^k * (1-p)^r
+  return(probability)
+}
+
+render_plot_4 <- function(r_value, p_value) {
   renderPlot({
     r <- r_value()
     p <- p_value()
     x <- 0:100
 
-    if (plot_type == "PMF") {
-      y <- dnbinom(x+r, size = r, prob = p)
-      df <- data.frame(Eșecuri = x, Probabilitate = y)
-      
-      ggplot(df, aes(x = Eșecuri, y = Probabilitate)) +
-        geom_bar(stat = "identity", fill = "#E69F00", alpha = 0.8) +
-        theme_minimal(base_family = "Inconsolata") +
-        labs(title = "Funcția de masă (PMF)", x = "Numărul de eșecuri", y = "Probabilitate")+
-        theme(text = element_text(color = "#FFF"),plot.background = element_rect(fill = "#101010"),panel.background = element_rect(fill = "#101010"),axis.text = element_text(color = "#FFF"),axis.title = element_text(color = "#FFF"))
-    } else {
-      y <- pnbinom(x+r, size = r, prob = p)
-      df <- data.frame(Eșecuri = x, Probabilitate_Cumulată = y)
-      
-      ggplot(df, aes(x = Eșecuri, y = Probabilitate_Cumulată)) +
-        geom_line(color = "#E69F00", size = 1.5) +
-        theme_minimal(base_family = "Inconsolata") +
-        labs(title = "Funcția de repartiție cumulativă (CDF)", x = "Numărul de eșecuri", y = "Probabilitate Cumulată")+
-        theme(text = element_text(color = "#FFF"),plot.background = element_rect(fill = "#101010"),panel.background = element_rect(fill = "#101010"),axis.text = element_text(color = "#FFF"),axis.title = element_text(color = "#FFF"))
-    }
+    pmf_values <- sapply(x, function(k) negative_binomial_pmf_4(k, r, p))
+    cmf_values <- cumsum(pmf_values)
+
+    df <- data.frame(x = x, pmf = pmf_values, cmf = cmf_values)
+    scaling_factor <- max(df$pmf) / max(df$cmf)
+
+    render_plot(df, scaling_factor)
   })
 }
 
-render_plot_3 <- function(r_value, p_value, plot_type) {
-  renderPlot({
-    r <- r_value()
-    p <- p_value()
-    x <- 0:100
-
-    if (plot_type == "PMF") {
-      y <- dnbinom(x+r, size = r, prob =1-p)
-      df <- data.frame(Eșecuri = x, Probabilitate = y)
-      
-      ggplot(df, aes(x = Eșecuri, y = Probabilitate)) +
-        geom_bar(stat = "identity", fill = "#E69F00", alpha = 0.8) +
-        theme_minimal(base_family = "Inconsolata") +
-        labs(title = "Funcția de masă (PMF)", x = "Numărul de eșecuri", y = "Probabilitate")+
-        theme(text = element_text(color = "#FFF"),plot.background = element_rect(fill = "#101010"),panel.background = element_rect(fill = "#101010"),axis.text = element_text(color = "#FFF"),axis.title = element_text(color = "#FFF"))
-    } else {
-      y <- pnbinom(x+r, size = r, prob = 1-p)
-      df <- data.frame(Eșecuri = x, Probabilitate_Cumulată = y)
-      
-      ggplot(df, aes(x = Eșecuri, y = Probabilitate_Cumulată)) +
-        geom_line(color = "#E69F00", size = 1.5) +
-        theme_minimal(base_family = "Inconsolata") +
-        labs(title = "Funcția de repartiție cumulativă (CDF)", x = "Numărul de eșecuri", y = "Probabilitate Cumulată")+
-        theme(text = element_text(color = "#FFF"),plot.background = element_rect(fill = "#101010"),panel.background = element_rect(fill = "#101010"),axis.text = element_text(color = "#FFF"),axis.title = element_text(color = "#FFF"))
-    }
-  })
+negative_binomial_pmf_5 <- function(k, n, p) {
+  binomial_coefficient <- choose(n, k)
+  probability <- binomial_coefficient * p^k * (1-p)^(n-k)
+  return(probability)
 }
 
-render_plot_4 <- function(r_value, p_value, plot_type) {
+render_plot_5 <- function(r_value, p_value) {
   renderPlot({
     r <- r_value()
     p <- p_value()
     x <- 0:100
 
-    # x e nr de esecuri
-    # r e numarul de succese
-    # p e probabilitatea de succes
+    pmf_values <- sapply(x, function(k) negative_binomial_pmf_5(k, k+r, p))
+    cmf_values <- cumsum(pmf_values)
 
-    if (plot_type == "PMF") {
-      y <- dnbinom(r, size = x, prob =1-p)
-      df <- data.frame(Eșecuri = x, Probabilitate = y)
-      
-      ggplot(df, aes(x = Eșecuri, y = Probabilitate)) +
-        geom_bar(stat = "identity", fill = "#E69F00", alpha = 0.8) +
-        theme_minimal(base_family = "Inconsolata") +
-        labs(title = "Funcția de masă (PMF)", x = "Numărul de eșecuri", y = "Probabilitate")+
-        theme(text = element_text(color = "#FFF"),plot.background = element_rect(fill = "#101010"),panel.background = element_rect(fill = "#101010"),axis.text = element_text(color = "#FFF"),axis.title = element_text(color = "#FFF"))
-    } else {
-      y <- pnbinom(r, size = x, prob = 1-p)
-      df <- data.frame(Eșecuri = x, Probabilitate_Cumulată = y)
-      
-      ggplot(df, aes(x = Eșecuri, y = Probabilitate_Cumulată)) +
-        geom_line(color = "#E69F00", size = 1.5) +
-        theme_minimal(base_family = "Inconsolata") +
-        labs(title = "Funcția de repartiție cumulativă (CDF)", x = "Numărul de eșecuri", y = "Probabilitate Cumulată")+
-        theme(text = element_text(color = "#FFF"),plot.background = element_rect(fill = "#101010"),panel.background = element_rect(fill = "#101010"),axis.text = element_text(color = "#FFF"),axis.title = element_text(color = "#FFF"))
-    }
-  })
-}
+    df <- data.frame(x = x, pmf = pmf_values, cmf = cmf_values)
+    scaling_factor <- max(df$pmf) / max(df$cmf)
 
-render_plot_5 <- function(r_value, p_value, plot_type) {
-  renderPlot({
-    r <- r_value()
-    p <- p_value()
-    x <- 0:100
-
-    # x e nr de esecuri
-    # r e numarul de succese
-    # p e probabilitatea de succes
-
-    if (plot_type == "PMF") {
-      y <- dbinom(r, size = x+r, prob =p)
-      df <- data.frame(Eșecuri = x, Probabilitate = y)
-      
-      ggplot(df, aes(x = Eșecuri, y = Probabilitate)) +
-        geom_bar(stat = "identity", fill = "#E69F00", alpha = 0.8) +
-        theme_minimal(base_family = "Inconsolata") +
-        labs(title = "Funcția de masă (PMF)", x = "Numărul de eșecuri", y = "Probabilitate")+
-        theme(text = element_text(color = "#FFF"),plot.background = element_rect(fill = "#101010"),panel.background = element_rect(fill = "#101010"),axis.text = element_text(color = "#FFF"),axis.title = element_text(color = "#FFF"))
-    } else {
-      y <- pbinom(r, size = x+r, prob = p)
-      df <- data.frame(Eșecuri = x, Probabilitate_Cumulată = y)
-      
-      ggplot(df, aes(x = Eșecuri, y = Probabilitate_Cumulată)) +
-        geom_line(color = "#E69F00", size = 1.5) +
-        theme_minimal(base_family = "Inconsolata") +
-        labs(title = "Funcția de repartiție cumulativă (CDF)", x = "Numărul de eșecuri", y = "Probabilitate Cumulată")+
-        theme(text = element_text(color = "#FFF"),plot.background = element_rect(fill = "#101010"),panel.background = element_rect(fill = "#101010"),axis.text = element_text(color = "#FFF"),axis.title = element_text(color = "#FFF"))
-    }
+    render_plot(df, scaling_factor)
   })
 }
 
@@ -269,22 +245,15 @@ server <- function(input, output, session) {
   reactive_values4 <- create_reactive_values(input, session, "4")
   reactive_values5 <- create_reactive_values(input, session, "5")
   
-  # Plots pentru primul tab
-  output$mass_function_plot_1 <- render_plot_1(reactive_values1$r_value, reactive_values1$p_value, "PMF")
-  output$cdf_function_plot_1 <- render_plot_1(reactive_values1$r_value, reactive_values1$p_value, "CDF")
+  output$mass_function_plot_1 <- render_plot_1(reactive_values1$r_value, reactive_values1$p_value)
   
-  # Plots pentru al doilea tab
-  output$mass_function_plot_2 <- render_plot_2(reactive_values2$r_value, reactive_values2$p_value, "PMF")
-  output$cdf_function_plot_2 <- render_plot_2(reactive_values2$r_value, reactive_values2$p_value, "CDF")
+  output$mass_function_plot_2 <- render_plot_2(reactive_values2$r_value, reactive_values2$p_value)
 
-  output$mass_function_plot_3 <- render_plot_3(reactive_values3$r_value, reactive_values3$p_value, "PMF")
-  output$cdf_function_plot_3 <- render_plot_3(reactive_values3$r_value, reactive_values3$p_value, "CDF")
+  output$mass_function_plot_3 <- render_plot_3(reactive_values3$r_value, reactive_values3$p_value)
 
-  output$mass_function_plot_4 <- render_plot_4(reactive_values4$r_value, reactive_values4$p_value, "PMF")
-  output$cdf_function_plot_4 <- render_plot_4(reactive_values4$r_value, reactive_values4$p_value, "CDF")
+  output$mass_function_plot_4 <- render_plot_4(reactive_values4$r_value, reactive_values4$p_value)
 
-  output$mass_function_plot_5 <- render_plot_5(reactive_values5$r_value, reactive_values5$p_value, "PMF")
-  output$cdf_function_plot_5 <- render_plot_5(reactive_values5$r_value, reactive_values5$p_value, "CDF")
+  output$mass_function_plot_5 <- render_plot_5(reactive_values5$r_value, reactive_values5$p_value)
 }
 
 shinyApp(ui = ui, server = server)
