@@ -1,7 +1,3 @@
-
-# constants
-
-# distribution names
 POISSON <- "POISSON"
 NORMALA_STANDARD <- "NORMALA_STANDARD"
 NORMALA <- "NORMALA"
@@ -25,9 +21,29 @@ get_output_distribution <- function(distribution) {
           tags$div(style = "margin-bottom: 20px;"), 
           plotOutput("std_normal_var5")
         ),
-        NORMALA = list(),
+        NORMALA = list(
+          tags$div(style = "margin-bottom: 20px;"), 
+          plotOutput("normal_var1"),
+          tags$div(style = "margin-bottom: 20px;"), 
+          plotOutput("normal_var2"),
+          tags$div(style = "margin-bottom: 20px;"), 
+          plotOutput("normal_var3"),
+          tags$div(style = "margin-bottom: 20px;"), 
+          plotOutput("normal_var4"),
+          tags$div(style = "margin-bottom: 20px;"), 
+          plotOutput("normal_var5")
+        ),
+        EXPONENTIALA = list(
+          tags$div(style = "margin-bottom: 20px;"), 
+          plotOutput("exponential_var1"),
+          tags$div(style = "margin-bottom: 20px;"), 
+          plotOutput("exponential_var2"),
+          tags$div(style = "margin-bottom: 20px;"), 
+          plotOutput("exponential_var3"),
+          tags$div(style = "margin-bottom: 20px;"), 
+          plotOutput("exponential_var4")
+        ),
         BINOMIALA = list(),
-        EXPONENTIALA = list(),
         POISSON = list(
           tags$div(style = "margin-bottom: 20px;"), 
           plotOutput("pois_plot_X"),

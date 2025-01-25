@@ -1,8 +1,10 @@
-
 library(shiny)
 library(bslib)
 
 source("server/poisson.R")
+source("server/std_normal.R")
+source("server/normal.R")
+source("server/exponential.R")
 
 # Functie pentru a crea o fila
 create_tab <- function(tab_title, title, img1_src, img2_src, distribution) {
@@ -24,9 +26,9 @@ create_tab <- function(tab_title, title, img1_src, img2_src, distribution) {
           switch(
             distribution,
             NORMALA_STANDARD = create_std_normal_slider(),
-            # NORMALA = create_norm_slider(),
+            NORMALA = create_normal_slider(),
+            EXPONENTIALA = create_exponential_slider(),
             # BINOMIALA = create_binom_slider(),
-            # EXPONENTIALA = create_exp_slider(),
             POISSON = create_pois_slider()
           )
         ),
@@ -44,7 +46,7 @@ create_tab <- function(tab_title, title, img1_src, img2_src, distribution) {
 ui <- fluidPage(
   theme = bs_theme(version = 4, bg = "#101010", fg = "#FFF", primary = "#E69F00", base_font = font_google("Inconsolata")),
   navbarPage(
-    "Distributii",
+    "Repartitii",
     create_tab(
       "Normala Standard",
       "O distributie normala cu media 0 si deviatia standard 1.",
@@ -60,18 +62,18 @@ ui <- fluidPage(
       NORMALA
     ),
     create_tab(
-      "Binomiala",
-      "O distributie de probabilitate discreta a numarului de succese intr-un numar fix de incercari independente.",
-      "https://wikimedia.org/api/rest_v1/media/math/render/svg/3b66d4401d0c06ed66ea0ddc4b4f28ced2298090",
-      "https://wikimedia.org/api/rest_v1/media/math/render/svg/3b66d4401d0c06ed66ea0ddc4b4f28ced2298090",
-      BINOMIALA
-    ),
-    create_tab(
       "Exponentiala",
       "O distributie de probabilitate continua care descrie timpul dintre evenimente intr-un proces Poisson.",
       "https://wikimedia.org/api/rest_v1/media/math/render/svg/3b66d4401d0c06ed66ea0ddc4b4f28ced2298090",
       "https://wikimedia.org/api/rest_v1/media/math/render/svg/3b66d4401d0c06ed66ea0ddc4b4f28ced2298090",
       EXPONENTIALA
+    ),
+    create_tab(
+      "Binomiala",
+      "O distributie de probabilitate discreta a numarului de succese intr-un numar fix de incercari independente.",
+      "https://wikimedia.org/api/rest_v1/media/math/render/svg/3b66d4401d0c06ed66ea0ddc4b4f28ced2298090",
+      "https://wikimedia.org/api/rest_v1/media/math/render/svg/3b66d4401d0c06ed66ea0ddc4b4f28ced2298090",
+      BINOMIALA
     ),
     create_tab(
       "Poisson",

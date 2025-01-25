@@ -14,7 +14,6 @@ create_std_normal_var1 <- function() {
     x <- seq(-4, 4, length.out = 500)
     cdf_values <- pnorm(x, mean = 0, sd = 1)
     
-    # Plotare
     plot(
       x, cdf_values,
       type = "l",
@@ -34,7 +33,6 @@ create_std_normal_var2 <- function() {
     transformed_x <- 3 - 2 * x
     cdf_values <- pnorm(transformed_x, mean = 0, sd = 1)
     
-    # Plotare
     plot(
       x, cdf_values,
       type = "l",
@@ -54,7 +52,6 @@ create_std_normal_var3 <- function() {
     transformed_x <- x^2
     cdf_values <- pnorm(transformed_x, mean = 0, sd = 1)
     
-    # Plotare
     plot(
       x, cdf_values,
       type = "l",
@@ -72,8 +69,8 @@ Transformarea: var3 = X^2"
 create_std_normal_var4 <- function(input) {
   renderPlot({
     n <- input$std_normal_n
-    X <- rnorm(n, mean = 0, sd = 1)  # Generăm n variabile aleatoare standard normale
-    S_n <- cumsum(X)                 # Calculăm suma cumulativă
+    X <- rnorm(n, mean = 0, sd = 1)
+    S_n <- cumsum(X)
     
     plot(
       1:n, S_n,
@@ -90,8 +87,8 @@ create_std_normal_var4 <- function(input) {
 create_std_normal_var5 <- function(input) {
   renderPlot({
     n <- input$std_normal_n
-    X <- rnorm(n, mean = 0, sd = 1)  # Generăm n variabile aleatoare standard normale
-    S_n2 <- cumsum(X^2)              # Calculăm suma cumulativă a pătratelor
+    X <- rnorm(n, mean = 0, sd = 1)
+    S_n2 <- cumsum(X^2)
     
     plot(
       1:n, S_n2,
@@ -106,7 +103,6 @@ create_std_normal_var5 <- function(input) {
 }
 
 std_normal_server <- function(input, output, session) {
-  # Render ploturi existente
   output$std_normal_var1 <- create_std_normal_var1()
   output$std_normal_var2 <- create_std_normal_var2()
   output$std_normal_var3 <- create_std_normal_var3()
