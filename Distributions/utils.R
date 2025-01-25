@@ -1,5 +1,4 @@
 
-# constants
 
 # distribution names
 POISSON <- "POISSON"
@@ -15,7 +14,12 @@ get_output_distribution <- function(distribution) {
         distribution,
         NORMALA_STANDARD = list(),
         NORMALA = list(),
-        BINOMIALA = list(),
+        BINOMIALA = list(
+         tags$div(style = "margin-bottom: 20px;"), plotOutput("binom_plot_X"),
+         tags$div(style = "margin-bottom: 20px;"), plotOutput("binom_plot_X_transformed"),
+         tags$div(style = "margin-bottom: 20px;"), plotOutput("binom_plot_X3"),
+         tags$div(style = "margin-bottom: 20px;"), plotOutput("binom_plot_X_sum")
+        ),
         EXPONENTIALA = list(),
         POISSON = list(
           tags$div(style = "margin-bottom: 20px;"), plotOutput("pois_plot_X"),
