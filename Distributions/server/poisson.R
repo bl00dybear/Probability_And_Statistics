@@ -1,4 +1,3 @@
-
 create_pois_slider <- function() {
   sliderInput("pois_lambda", "λ:", min = 0.1, max = 10, value = 1, step = 0.1)
 }

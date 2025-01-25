@@ -1,8 +1,8 @@
-
 library(shiny)
 library(bslib)
 
 source("server/poisson.R")
+source("server/std_normal.R")
 
 # Functie pentru a crea o fila
 create_tab <- function(tab_title, title, img1_src, img2_src, distribution) {
@@ -21,28 +21,23 @@ create_tab <- function(tab_title, title, img1_src, img2_src, distribution) {
         div(
           class = "col-4",
           tags$h3("Input:"),
-          # sliderInput(paste0("r", tab_number), "Numărul de succese (r):", min = 1, max = 50, value = 10, step = 1),
-          # checkboxInput(paste0("fix_r", tab_number), "Fixează r", value = TRUE),
-          # sliderInput(paste0("p", tab_number), "Probabilitatea de succes (p):", min = 0.01, max = 1, value = 0.5, step = 0.01),
-          # checkboxInput(paste0("fix_p", tab_number), "Fixează p", value = FALSE)
-
           switch(
             distribution,
-            # NORMALA_STANDARD = create_norm_std_slider(),
+            NORMALA_STANDARD = create_std_normal_slider(),
             # NORMALA = create_norm_slider(),
-            # BINOMIALA = create_binom_slider(),
             # EXPONENTIALA = create_exp_slider(),
             POISSON = create_pois_slider()
+            # BINOMIALA = create_binom_slider(),
           )
         ),
         div(
           class = "col-8",
-          h4("Reprezentare Grafică"),
+          h4("Reprezentare Grafica"),
 
           # switch pentru a selecta tipul de distributie
           switch(
             distribution,
-            NORMALA_STANDARD = plotOutput("norm_std_server"),
+            NORMALA_STANDARD = plotOutput("std_normal_cdf_plot"),
             NORMALA = textOutput("norm_server"),
             BINOMIALA = textOutput("binom_server"),
             EXPONENTIALA = textOutput("exp_server"),
