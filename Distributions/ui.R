@@ -3,6 +3,7 @@ library(shiny)
 library(bslib)
 
 source("server/poisson.R")
+source("server/binom.R")
 
 # Functie pentru a crea o fila
 create_tab <- function(tab_title, title, img1_src, img2_src, distribution) {
@@ -30,7 +31,7 @@ create_tab <- function(tab_title, title, img1_src, img2_src, distribution) {
             distribution,
             # NORMALA_STANDARD = create_norm_std_slider(),
             # NORMALA = create_norm_slider(),
-            # BINOMIALA = create_binom_slider(),
+            BINOMIALA = create_binom_slider(),
             # EXPONENTIALA = create_exp_slider(),
             POISSON = create_pois_slider()
           )
