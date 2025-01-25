@@ -1,432 +1,292 @@
 library(shiny)
 library(bslib)
 library(ggplot2)
-library(plotly)
 
-
-
-ui <- fluidPage(
-  theme = bs_theme(
-    version = 4,
-    bg = "#101010",
-    fg = "#FFF",
-    primary = "#E69F00",
-    base_font = font_google("Inconsolata")
-  ),
-  navbarPage(
-    "Repartitia Negativ Binomiala",
-    tabPanel(
-      "Formularea 1",
+# Funcție pentru a crea un tab UI
+# Funcție pentru a crea un tab UI care include și graficele dinamice
+create_tab <- function(tab_title, title, img1_src, img2_src, tab_number, titlu_ex_1, ex_1, titlu_ex_2, ex_2) {
+  tabPanel(
+    tab_title,
+    div(
+      class = "container",
+      h1(title),
       div(
-        class = "container",
-        h1("Numărul de eșecuri înainte de a obține un număr fix de succese (r)"),
+        class = "d-flex justify-content-center",
+        img(src = img1_src, style = "filter: invert(1);height:4vh;"),
+        img(src = img2_src, style = "filter: invert(1);height:4vh;")
+      ),
+      div(
+        class = "row",
         div(
-            class = "d-flex justify-content-center",
-            img(
-              src = "https://wikimedia.org/api/rest_v1/media/math/render/svg/1a26b86be5f29ff5c8455dd3f357faeb8aaed623",
-              style = "filter: invert(1);height:4vh;"
-            ),
-            img(
-              src = "https://wikimedia.org/api/rest_v1/media/math/render/svg/29944ccb6e33fb4970c050a4cc81f3b4ca9aa5b1",
-              style = "filter: invert(1);height:4vh;"
-            )
-          ),
-        div(
-          class = "row",
-          div(
-            class = "col-4",
-            tags$h3("Input:"),
-            sliderInput("r", "Numărul de succese (r):", min = 1, max = 50, value = 10, step = 1),
-            checkboxInput("fix_r", "Fixează r", value = TRUE),
-            sliderInput("p", "Probabilitatea de succes (p):", min = 0.01, max = 1, value = 0.5, step = 0.01),
-            checkboxInput("fix_p", "Fixează p", value = FALSE)
-          ),
-          div(
-            class = "col-8",
-            h4("Reprezentare Grafică"),
-            plotOutput("mass_function_plot"),
-            plotOutput("cdf_function_plot")
-          )
+          class = "col-4",
+          tags$h3("Input:"),
+          sliderInput(paste0("r", tab_number), "Numărul de succese (r):", min = 1, max = 50, value = 10, step = 1),
+          checkboxInput(paste0("fix_r", tab_number), "Fixează r", value = TRUE),
+          sliderInput(paste0("p", tab_number), "Probabilitatea de succes (p):", min = 0.01, max = 1, value = 0.5, step = 0.01),
+          checkboxInput(paste0("fix_p", tab_number), "Fixează p", value = FALSE)
         ),
         div(
-          h2("1. Controlul calitatii in fabricare"),
-          h3("Situatie:"),
-          p("Un producator de componente electronice testeaza piesele produse pe linia de asamblare. Fiecare piesa are o probabilitate de p=0.9 sa treaca testul de control al calitatii (adica sa fie un succes). Producatorul doreste sa determine cate piese defecte (esecuri) se vor intalni inainte ca 10 piese sa fie calificate drept conforme (r=10)."),
-          h3("Numar de esecuri:"),
-          p("Aceasta se refera la numarul de piese defecte inainte ca 10 piese sa treaca testul."),
-          h3("Aplicatie a repartitiei:"),
-          p("Se utilizeaza formula din repartitia negativ binomiala pentru a calcula probabilitatea ca un anumit numar de piese defecte sa fie intalnite inainte de atingerea celor 10 succese."),
-
-          h2("2. Experiment de marketing digital"),
-          h3("Situatie:"),
-          p("Un specialist in marketing lanseaza o campanie de reclame online. Fiecare click pe reclama este considerat un succes, iar probabilitatea unui click este p=0.05. Specialistul vrea sa afle cate afisari fara click (esecuri) sunt necesare inainte de a obtine 5 click-uri (r=5)."),
-          h3("Numar de esecuri:"),
-          p("Numarul de afisari ale reclamelor fara click-uri reprezinta numarul de esecuri inainte de atingerea celor 5 click-uri dorite."),
-          h3("Aplicatie a repartitiei:"),
-          p("Se aplica repartitia negativ binomiala pentru a calcula probabilitatea ca un anumit numar de afisari fara click sa aiba loc inainte ca cele 5 click-uri sa fie inregistrate.")
-        )
-      )
-    
-    ),
-    tabPanel(
-      "Formularea 2",
-      div(
-        class = "container",
-        h1("Numărul total de încercări necesare pentru a obține un număr fix de succese (r)"),
-        div(
-            class="d-flex justify-content-center",
-            img(
-            src = "https://wikimedia.org/api/rest_v1/media/math/render/svg/ccc5e37984e753e27f956045bf796f966d36e2f6",
-            style = "filter: invert(1);height:4vh;"
-            ),
-            img(
-            src = "https://wikimedia.org/api/rest_v1/media/math/render/svg/122b97516ba764db7dfc9ecc39f68a12d1db6be3",
-            style = "filter: invert(1);height:4vh;"
+          class = "col-8",
+          h4("Reprezentare Grafică"),
+          div(
+            style = "padding: 10px; margin-bottom: 10px;",
+            plotOutput(outputId = paste0("mass_function_plot_", tab_number)),
             )
-          ),
+        )
+      ),
+      div(
+        class = "row",
         div(
-          class = "row",
-          div(
-            class = "col-4",
-            tags$h3("Input:"),
-            sliderInput("r2", "Numărul de succese (r):", min = 1, max = 50, value = 10, step = 1),
-            checkboxInput("fix_r2", "Fixează r", value = TRUE),
-            sliderInput("p2", "Probabilitatea de succes (p):", min = 0.01, max = 1, value = 0.5, step = 0.01),
-            checkboxInput("fix_p2", "Fixează p", value = FALSE)
-          ),
-          div(
-            class = "col-8",
-            h4("Reprezentare Grafică"),
-            plotOutput("mass_function_plot2"),
-            plotOutput("cdf_function_plot2")
-          )
+          class = "col-6",
+          h4(titlu_ex_1),
+          p(ex_1)
         ),
         div(
-          h2("1. Controlul calitatii in fabricare"),
-          h3("Situatie:"),
-          p("Un producator de componente electronice testeaza piesele produse pe linia de asamblare. Fiecare piesa are o probabilitate de p=0.9 sa treaca testul de control al calitatii (adica sa fie un succes). Producatorul doreste sa determine cate piese defecte (esecuri) se vor intalni inainte ca 10 piese sa fie calificate drept conforme (r=10)."),
-          h3("Numar de esecuri:"),
-          p("Aceasta se refera la numarul de piese defecte inainte ca 10 piese sa treaca testul."),
-          h3("Aplicatie a repartitiei:"),
-          p("Se utilizeaza formula din repartitia negativ binomiala pentru a calcula probabilitatea ca un anumit numar de piese defecte sa fie intalnite inainte de atingerea celor 10 succese."),
-
-          h2("2. Experiment de marketing digital"),
-          h3("Situatie:"),
-          p("Un specialist in marketing lanseaza o campanie de reclame online. Fiecare click pe reclama este considerat un succes, iar probabilitatea unui click este p=0.05. Specialistul vrea sa afle cate afisari fara click (esecuri) sunt necesare inainte de a obtine 5 click-uri (r=5)."),
-          h3("Numar de esecuri:"),
-          p("Numarul de afisari ale reclamelor fara click-uri reprezinta numarul de esecuri inainte de atingerea celor 5 click-uri dorite."),
-          h3("Aplicatie a repartitiei:"),
-          p("Se aplica repartitia negativ binomiala pentru a calcula probabilitatea ca un anumit numar de afisari fara click sa aiba loc inainte ca cele 5 click-uri sa fie inregistrate.")
-        )
-      )
-    ),
-    tabPanel(
-      "Formularea 3",
-      div(
-        class = "container",
-        h1("Numărul total de încercări necesare pentru a obține un număr fix de eșecuri (r)"),
-        div(
-            class="d-flex justify-content-center",
-            img(
-            src = "https://wikimedia.org/api/rest_v1/media/math/render/svg/ccc5e37984e753e27f956045bf796f966d36e2f6",
-            style = "filter: invert(1);height:4vh;"
-            ),
-            img(
-            src = "https://wikimedia.org/api/rest_v1/media/math/render/svg/7fd538f62a633cdeae41ffe6c8bd2811a8371b1d",
-            style = "filter: invert(1);height:4vh;"
-            )
-          ),
-        div(
-          class = "row", 
-          div(
-            class = "col-4", 
-            tags$h3("Input:"),
-            textInput("txt3", "Favorite Color:", ""),
-            textInput("txt4", "Favorite Animal:", "")
-          ),
-          div(
-            class = "col-8", 
-            h1("Header 2"),
-            h4("Output 2"),
-            verbatimTextOutput("txtout2")
-          )
-        )
-      )
-    ),
-    tabPanel(
-      "Formularea 4",
-      div(
-        class = "container",
-        h1("Numărul de succese înainte de a obține un număr fix de eșecuri (r)"),
-        div(
-            class="d-flex justify-content-center",
-            img(
-            src = "https://wikimedia.org/api/rest_v1/media/math/render/svg/1a26b86be5f29ff5c8455dd3f357faeb8aaed623",
-            style = "filter: invert(1);height:4vh;"
-            ),
-            img(
-            src = "https://wikimedia.org/api/rest_v1/media/math/render/svg/5d39d1344aec87bea613a8161cdecfbd180ff203",
-            style = "filter: invert(1);height:4vh;"
-            )
-          ),
-        div(
-          class = "row", 
-          div(
-            class = "col-4", 
-            tags$h3("Input:"),
-            textInput("txt3", "Favorite Color:", ""),
-            textInput("txt4", "Favorite Animal:", "")
-          ),
-          div(
-            class = "col-8", 
-            h1("Header 2"),
-            h4("Output 2"),
-            verbatimTextOutput("txtout2")
-          )
-        )
-      )
-    ),
-    tabPanel(
-      "Formularea 5",
-      div(
-        class = "container",
-        h1("Numărul de succese într-un număr fix de încercări (n)"),
-        div(
-            class="d-flex justify-content-center",
-            img(
-            src = "https://wikimedia.org/api/rest_v1/media/math/render/svg/d23e3ebeb017f43015cc710cb39ac89641aea136",
-            style = "filter: invert(1);height:4vh;"
-            ),
-            img(
-            src = "https://wikimedia.org/api/rest_v1/media/math/render/svg/09ed5ae47e20d49e0a5a42d68fe19e15326bd60e",
-            style = "filter: invert(1);height:4vh;"
-            )
-          ),
-        div(
-          class = "row", 
-          div(
-            class = "col-4", 
-            tags$h3("Input:"),
-            textInput("txt3", "Favorite Color:", ""),
-            textInput("txt4", "Favorite Animal:", "")
-          ),
-          div(
-            class = "col-8", 
-            h1("Header 2"),
-            h4("Output 2"),
-            verbatimTextOutput("txtout2")
-          )
+          class = "col-6",
+          h4(titlu_ex_2),
+          p(ex_2)
         )
       )
     )
   )
-)
+}
 
-server <- function(input, output, session) {
-  # Reactive values pentru animație (initializează fără `input$r`)
+
+
+
+# Funcție pentru actualizarea valorilor reactive și animație
+create_reactive_values <- function(input, session, suffix) {
   rv <- reactiveValues(current_r = 10, current_p = 0.5)
+  
   r_value <- reactive({
-  if (!is.null(input$fix_r) && input$fix_r) {
-    input$r
-  } else {
-    rv$current_r
-  }
-})
-
+    if (!is.null(input[[paste0("fix_r", suffix)]]) && input[[paste0("fix_r", suffix)]]) {
+      input[[paste0("r", suffix)]]
+    } else {
+      rv$current_r
+    }
+  })
+  
   p_value <- reactive({
-    if (!is.null(input$fix_p) && input$fix_p) input$p else rv$current_p
-  })
-  # observeEvent e ca un trigger cu parametrii:
-  # evenimentul ce trebuie urmarit, codul care se va executra cand expresia se modifica
-  # nu permitem sa fie ambele casute debifatezx
-  observeEvent(input$fix_r, {
-  if (isTRUE(input$fix_r) && !isTRUE(input$fix_p)) {
-      updateCheckboxInput(session, "fix_p", value = TRUE)
+    if (!is.null(input[[paste0("fix_p", suffix)]]) && input[[paste0("fix_p", suffix)]]) {
+      input[[paste0("p", suffix)]]
+    } else {
+      rv$current_p
     }
   })
-
-  observeEvent(input$fix_p, {
-    if (!isTRUE(input$fix_r) && isTRUE(input$fix_p)) {
-      updateCheckboxInput(session, "fix_r", value = TRUE)
-    }
-  })
-
-
+  
   observe({
-    invalidateLater(500, session)# expresia reactiva care activeaza observe
-
-    #folosim isolate pentru a nu avea reactivitate extra
-    #adica modificam valorile fara a declansa o reactie dupa modificare
+    invalidateLater(500, session)  # Actualizare periodică
     isolate({
-      if (!is.null(input$fix_r) && !isTRUE(input$fix_r))  {
+      if (!is.null(input[[paste0("fix_r", suffix)]]) && !input[[paste0("fix_r", suffix)]]) {
         rv$current_r <- rv$current_r + 0.5
         if (rv$current_r > 50) rv$current_r <- 1
       }
-
-      if (!is.null(input$fix_p) && !isTRUE(input$fix_p)) {
+      if (!is.null(input[[paste0("fix_p", suffix)]]) && !input[[paste0("fix_p", suffix)]]) {
         rv$current_p <- rv$current_p + 0.01
         if (rv$current_p > 1) rv$current_p <- 0.01
       }
     })
   })
+  
+  list(r_value = r_value, p_value = p_value, rv = rv)
+}
 
-  #renderPlot genereaza graficul functiei de masa
-  output$mass_function_plot <- renderPlot({
-    #functiile de extragere a parametrilor
-    r <- r_value()
-    p <- p_value()
-
-    x <- 0:100 # nr de esecuri posibile inainte de a obtine cele r succese
-    y <- dnbinom(x, size = r, prob = p) # functia de masa a probabilitatilor pt nb
-    # x e numarul de esecuri
-    # size e numarul de succese dorite
-    # prob e prob de succes pt fiecare incercare
-    # y e un vector de probabilitati de succes la fiecare incercare
-    dataframe <- data.frame(Eșecuri = x, Probabilitate = y)
-
-    ggplot(dataframe, aes(x = Eșecuri, y = Probabilitate)) +
-      geom_bar(stat = "identity", fill = "#E69F00", alpha = 0.8) + # grafic cu bare verticale
+render_plot <- function(df,scaling_factor) {
+  ggplot(df, aes(x = x)) +
+      geom_bar(aes(y = pmf), stat = "identity", fill = "#E69F00", alpha = 0.8, width = 0.8) +
+      geom_step(aes(y = cmf * scaling_factor), color = "#56B4E9", size = 1.2) +
       theme_minimal(base_family = "Inconsolata") +
-      labs(
-        title = "Funcția de masă (PMF)",
-        x = "Numărul de eșecuri",
-        y = "Probabilitate"
-      ) +
-      theme(
-        text = element_text(color = "#FFF"),
-        plot.background = element_rect(fill = "#101010"),
-        panel.background = element_rect(fill = "#101010"),
-        axis.text = element_text(color = "#FFF"),
-        axis.title = element_text(color = "#FFF")
-      )
-  })
+      labs(title = "PMF și CMF pentru Distribuția Binomială Negativă", x = "", y = "Probabilitate (PMF)") +
+      scale_y_continuous(sec.axis = sec_axis(~ . / scaling_factor, name = "Probabilitate Cumulativă (CMF)")) +
+      theme(text = element_text(color = "#000"),plot.background = element_rect(fill = "#FFF"),panel.background = element_rect(fill = "#FFF"),axis.text = element_text(color = "#000"),axis.title = element_text(color = "#000"),axis.title.y.right = element_text(color = "#000"),axis.text.y.right = element_text(color = "#000"),panel.border = element_blank(),aspect.ratio = 0.5)
+}
 
-  # Reprezentare funcția de repartiție
-  output$cdf_function_plot <- renderPlot({
+negative_binomial_pmf_1 <- function(k, r, p) {
+  binomial_coefficient <- choose(k + r - 1, k)
+  probability <- binomial_coefficient * p^r * (1 - p)^k
+  return(probability)
+}
+
+# Funcție pentru generarea graficului
+render_plot_1 <- function(r_value, p_value) {
+  renderPlot({
     r <- r_value()
     p <- p_value()
-
     x <- 0:100
-    y <- pnbinom(x, size = r, prob = p) # P(X<=x) pt toate val lui x
-    # size e numarul de succese
-    # prob e probabilitatea de succes
-    df <- data.frame(Esecuri = x, Probabilitate_Cumulata = y)
 
-    ggplot(df, aes(x = Esecuri, y = Probabilitate_Cumulata)) +
-      geom_line(color = "#E69F00", size = 1.5) +
-      theme_minimal(base_family = "Inconsolata") +
-      labs(
-        title = "Funcția de repartiție cumulativă (CDF)",
-        x = "Numărul de eșecuri",
-        y = "Probabilitate Cumulată"
-      ) +
-      theme(
-        text = element_text(color = "#FFF"),
-        plot.background = element_rect(fill = "#101010"),
-        panel.background = element_rect(fill = "#101010"),
-        axis.text = element_text(color = "#FFF"),
-        axis.title = element_text(color = "#FFF")
-      )
-  })
+    pmf_values <- sapply(x, function(k) negative_binomial_pmf_1(k, r, p))
+    cmf_values <- cumsum(pmf_values)
 
-  ######################################################################
+    df <- data.frame(x = x, pmf = pmf_values, cmf = cmf_values)
+    scaling_factor <- max(df$pmf) / max(df$cmf)
 
-  rv2 <- reactiveValues(current_r2 = 10, current_p2 = 0.5)
-  r_value2 <- reactive({
-    if (!is.null(input$fix_r2) && input$fix_r2) input$r2 else rv2$current_r2
-  })
-
-  p_value2 <- reactive({
-    if (!is.null(input$fix_p2) && input$fix_p2) input$p2 else rv2$current_p2
-  })
-
-  observeEvent(input$fix_r2, {
-    if (isTRUE(input$fix_r2) && !isTRUE(input$fix_p2)) {
-      updateCheckboxInput(session, "fix_p2", value = TRUE)
-    }
-  })
-
-  observeEvent(input$fix_p2, {
-    if (!isTRUE(input$fix_r2) && isTRUE(input$fix_p2)) {
-      updateCheckboxInput(session, "fix_r2", value = TRUE)
-    }
-  })
-
-  observe({
-  invalidateLater(500, session)
-
-  isolate({
-    # Verificare fix_r2
-    if (!is.null(input$fix_r2) && !isTRUE(input$fix_r2)) {
-      rv$current_r2 <- ifelse(is.null(rv$current_r2) || is.na(rv$current_r2), 0, rv$current_r2)
-      rv$current_r2 <- rv$current_r2 + 0.5
-      if (rv$current_r2 > 50) rv$current_r2 <- 1
-    }
-
-    # Verificare fix_p2
-    if (!is.null(input$fix_p2) && !isTRUE(input$fix_p2)) {
-      rv$current_p2 <- ifelse(is.null(rv$current_p2) || is.na(rv$current_p2), 0, rv$current_p2)
-      rv$current_p2 <- rv$current_p2 + 0.01
-      if (rv$current_p2 > 1) rv$current_p2 <- 0.01
-    }
-  })
+    render_plot(df, scaling_factor)
 })
+}
 
+negative_binomial_pmf_2 <- function(n, r, p) {
+  binomial_coefficient <- choose(n-1, r-1)
+  probability <- binomial_coefficient * p^r * (1 - p)^(n-r)
+  return(probability)
+}
 
-  output$mass_function_plot2 <- renderPlot({
-    r <- r_value2()
-    p <- p_value2()
+render_plot_2 <- function(r_value, p_value) {
+  renderPlot({
+    r <- r_value()
+    p <- p_value()
+    x <- r:100
 
-    print(r)
+    pmf_values <- sapply(x, function(k) negative_binomial_pmf_2(k, r, p))
+    cmf_values <- cumsum(pmf_values)
 
-    x <- 0:100
-    ##!!
-    y <- dnbinom(x + r, size = r, prob = p) 
-    dataframe2 <- data.frame(Eșecuri = x, Probabilitate = y)
+    df <- data.frame(x = x, pmf = pmf_values, cmf = cmf_values)
+    scaling_factor <- max(df$pmf) / max(df$cmf)
 
-    ggplot(dataframe2, aes(x = Eșecuri, y = Probabilitate)) +
-      geom_bar(stat = "identity", fill = "#E69F00", alpha = 0.8) +
-      theme_minimal(base_family = "Inconsolata") +
-      labs(
-        title = "Funcția de masă (PMF)",
-        x = "Numărul de eșecuri",
-        y = "Probabilitate"
-      ) +
-      theme(
-        text = element_text(color = "#FFF"),
-        plot.background = element_rect(fill = "#101010"),
-        panel.background = element_rect(fill = "#101010"),
-        axis.text = element_text(color = "#FFF"),
-        axis.title = element_text(color = "#FFF")
-      )
+    render_plot(df, scaling_factor)
+    })
+}
+
+negative_binomial_pmf_3 <- function(n, r, p) {
+  binomial_coefficient <- choose(n-1, r-1)
+  probability <- binomial_coefficient * p^(n-r) * (1 - p)^r
+  return(probability)
+}
+
+render_plot_3 <- function(r_value, p_value) {
+  renderPlot({
+    r <- r_value()
+    p <- p_value()
+    x <- r:100
+
+    pmf_values <- sapply(x, function(k) negative_binomial_pmf_1(k, r, p))
+    cmf_values <- cumsum(pmf_values)
+
+    df <- data.frame(x = x, pmf = pmf_values, cmf = cmf_values)
+    scaling_factor <- max(df$pmf) / max(df$cmf)
+
+    render_plot(df, scaling_factor)
   })
+}
 
-  # Reprezentare funcția de repartiție
-  output$cdf_function_plot2 <- renderPlot({
-    r <- r_value2()
-    p <- p_value2()
+negative_binomial_pmf_4 <- function(k, r, p) {
+  binomial_coefficient <- choose(k+r-1, k)
+  probability <- binomial_coefficient * p^k * (1-p)^r
+  return(probability)
+}
 
+render_plot_4 <- function(r_value, p_value) {
+  renderPlot({
+    r <- r_value()
+    p <- p_value()
     x <- 0:100
-    y <- pnbinom(x + r, size = r, prob = p) 
-    dataframe2 <- data.frame(Esecuri = x, Probabilitate_Cumulata = y)
 
-    ggplot(dataframe2, aes(x = Esecuri, y = Probabilitate_Cumulata)) +
-      geom_line(color = "#E69F00", size = 1.5) +
-      theme_minimal(base_family = "Inconsolata") +
-      labs(
-        title = "Funcția de repartiție cumulativă (CDF)",
-        x = "Numărul de eșecuri",
-        y = "Probabilitate Cumulată"
-      ) +
-      theme(
-        text = element_text(color = "#FFF"),
-        plot.background = element_rect(fill = "#101010"),
-        panel.background = element_rect(fill = "#101010"),
-        axis.text = element_text(color = "#FFF"),
-        axis.title = element_text(color = "#FFF")
-      )
+    pmf_values <- sapply(x, function(k) negative_binomial_pmf_4(k, r, p))
+    cmf_values <- cumsum(pmf_values)
+
+    df <- data.frame(x = x, pmf = pmf_values, cmf = cmf_values)
+    scaling_factor <- max(df$pmf) / max(df$cmf)
+
+    render_plot(df, scaling_factor)
   })
+}
 
+negative_binomial_pmf_5 <- function(k, n, p) {
+  binomial_coefficient <- choose(n, k)
+  probability <- binomial_coefficient * p^k * (1-p)^(n-k)
+  return(probability)
+}
+
+render_plot_5 <- function(r_value, p_value) {
+  renderPlot({
+    r <- r_value()
+    p <- p_value()
+    x <- 0:100
+
+    pmf_values <- sapply(x, function(k) negative_binomial_pmf_5(k, k+r, p))
+    cmf_values <- cumsum(pmf_values)
+
+    df <- data.frame(x = x, pmf = pmf_values, cmf = cmf_values)
+    scaling_factor <- max(df$pmf) / max(df$cmf)
+
+    render_plot(df, scaling_factor)
+  })
+}
+
+ui <- fluidPage(
+  theme = bs_theme(version = 4, bg = "#101010", fg = "#FFF", primary = "#E69F00", base_font = font_google("Inconsolata")),
+  navbarPage(
+    "Repartitia Negativ Binomiala",
+    create_tab(
+              "Formularea 1",
+              "Numărul de eșecuri înainte de a obține un număr fix de succese (r)", 
+              "https://wikimedia.org/api/rest_v1/media/math/render/svg/1a26b86be5f29ff5c8455dd3f357faeb8aaed623",
+              "https://wikimedia.org/api/rest_v1/media/math/render/svg/29944ccb6e33fb4970c050a4cc81f3b4ca9aa5b1",
+              1,
+              "Testarea produselor până la găsirea unui număr fix de defecte",
+              "O companie produce componente electronice și dorește să testeze câte componente trebuie verificate până când găsesc un număr fix de componente defecte (r). Fiecare test este un experiment Bernoulli: Succes (componenta este defectă, probabilitate p) sau Eșec (componenta este funcțională, probabilitate 1 - p).",
+              "Numărul de încercări până la a prinde un număr fix de pești",
+              "Un pescar merge la pescuit și dorește să prindă un număr fix de pești (r). Fiecare aruncare a undiței este un experiment Bernoulli: Succes (prinde un pește, probabilitate p) sau Eșec (nu prinde un pește, probabilitate 1 - p)."),
+    create_tab(
+              "Formularea 2", 
+              "Numărul total de încercări necesare pentru a obține un număr fix de succese (r)",
+              "https://wikimedia.org/api/rest_v1/media/math/render/svg/ccc5e37984e753e27f956045bf796f966d36e2f6",
+              "https://wikimedia.org/api/rest_v1/media/math/render/svg/122b97516ba764db7dfc9ecc39f68a12d1db6be3",
+              2,
+              "Testarea medicamentelor până la obținerea unui număr fix de rezultate pozitive",
+              "Un cercetător testează un nou medicament și dorește să obțină un număr fix de pacienți care răspund pozitiv la tratament. Fiecare pacient este un experiment Bernoulli: Succes (pacientul răspunde pozitiv, probabilitate p) sau Eșec (pacientul nu răspunde pozitiv, probabilitate 1 - p).",
+              "Numărul de aruncări ale unui zar până la obținerea unui număr fix de șase",
+              "Un jucător aruncă un zar și dorește să obțină un număr fix de șase. Fiecare aruncare este un experiment Bernoulli: Succes (zarul arată 6, probabilitate p = 1/6) sau Eșec (zarul nu arată 6, probabilitate 1 - p)."),
+    create_tab(
+              "Formularea 3",
+              "Numărul total de încercări necesare pentru a obține un număr fix de eșecuri (r)",
+              "https://wikimedia.org/api/rest_v1/media/math/render/svg/ccc5e37984e753e27f956045bf796f966d36e2f6",
+              "https://wikimedia.org/api/rest_v1/media/math/render/svg/7fd538f62a633cdeae41ffe6c8bd2811a8371b1d",
+              3,
+              "Testarea produselor până la găsirea unui număr fix de produse neconforme",
+              "Un controlor de calitate testează produse și dorește să găsească un număr fix de produse neconforme. Fiecare test este un experiment Bernoulli: Succes (produsul este conform, probabilitate p) sau Eșec (produsul este neconform, probabilitate 1 - p).",
+              "Numărul de întrebări până la obținerea unui număr fix de răspunsuri greșite",
+              "Un student răspunde la întrebări și dorește să obțină un număr fix de răspunsuri greșite. Fiecare întrebare este un experiment Bernoulli: Succes (răspunsul este corect, probabilitate p) sau Eșec (răspunsul este greșit, probabilitate 1 - p)."),
+    create_tab(
+              "Formularea 4",
+              "Numărul de succese înainte de a obține un număr fix de eșecuri (r)",
+              "https://wikimedia.org/api/rest_v1/media/math/render/svg/1a26b86be5f29ff5c8455dd3f357faeb8aaed623",
+              "https://wikimedia.org/api/rest_v1/media/math/render/svg/5d39d1344aec87bea613a8161cdecfbd180ff203",
+              4,
+              "Numărul de clienți satisfăcuți înainte de a obține un număr fix de reclamații",
+              "Un magazin dorește să obțină un număr fix de reclamații de la clienți. Fiecare client este un experiment Bernoulli: Succes (clientul este satisfăcut, probabilitate p) sau Eșec (clientul depune o reclamație, probabilitate 1 - p).",
+              "Numărul de lovituri la țintă înainte de a obține un număr fix de rateuri",
+              "Un sportiv trage la țintă și dorește să obțină un număr fix de rateuri. Fiecare tragere este un experiment Bernoulli: Succes (lovitură la țintă, probabilitate p) sau Eșec (ratare, probabilitate 1 - p)."),
+    create_tab(
+              "Formularea 5",
+              "Numărul de succese într-un număr fix de încercări (n)",
+              "https://wikimedia.org/api/rest_v1/media/math/render/svg/d23e3ebeb017f43015cc710cb39ac89641aea136",
+              "https://wikimedia.org/api/rest_v1/media/math/render/svg/09ed5ae47e20d49e0a5a42d68fe19e15326bd60e",
+              5,
+              "Numărul de răspunsuri corecte la un test cu un număr fix de întrebări",
+              "Un student răspunde la un test cu un număr fix de întrebări. Fiecare întrebare este un experiment Bernoulli: Succes (răspunsul este corect, probabilitate p) sau Eșec (răspunsul este greșit, probabilitate 1 - p).",
+              "Numărul de produse conform într-un lot de dimensiune fixă",
+              "Un lot de produse este testat, iar fiecare produs este un experiment Bernoulli: Succes (produsul este conform, probabilitate p) sau Eșec (produsul este neconform, probabilitate 1 - p).")
+    ),
+  )
+)
+
+server <- function(input, output, session) {
+  # Creare reactive pentru fiecare tab
+  reactive_values1 <- create_reactive_values(input, session, "1")
+  reactive_values2 <- create_reactive_values(input, session, "2")
+  reactive_values3 <- create_reactive_values(input, session, "3")
+  reactive_values4 <- create_reactive_values(input, session, "4")
+  reactive_values5 <- create_reactive_values(input, session, "5")
+  
+  output$mass_function_plot_1 <- render_plot_1(reactive_values1$r_value, reactive_values1$p_value)
+  
+  output$mass_function_plot_2 <- render_plot_2(reactive_values2$r_value, reactive_values2$p_value)
+
+  output$mass_function_plot_3 <- render_plot_3(reactive_values3$r_value, reactive_values3$p_value)
+
+  output$mass_function_plot_4 <- render_plot_4(reactive_values4$r_value, reactive_values4$p_value)
+
+  output$mass_function_plot_5 <- render_plot_5(reactive_values5$r_value, reactive_values5$p_value)
 }
 
 shinyApp(ui = ui, server = server)
