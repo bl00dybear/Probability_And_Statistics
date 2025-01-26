@@ -1,64 +1,16 @@
-# distribution names
-POISSON <- "POISSON"
 NORMALA_STANDARD <- "NORMALA_STANDARD"
 NORMALA <- "NORMALA"
-BINOMIALA <- "BINOMIALA"
 EXPONENTIALA <- "EXPONENTIALA"
+BINOMIALA <- "BINOMIALA"
+POISSON <- "POISSON"
 
-
-# main decision function for the distribution switch
 get_output_distribution <- function(distribution) {
-    switch(
-        distribution,
-        BINOMIALA = list(
-          tags$div(style = "margin-bottom: 20px;"), plotOutput("binom_plot_X"),
-          tags$div(style = "margin-bottom: 20px;"), plotOutput("binom_plot_X_transformed"),
-          tags$div(style = "margin-bottom: 20px;"), plotOutput("binom_plot_X3"),
-          tags$div(style = "margin-bottom: 20px;"), plotOutput("binom_plot_X_sum")
-        ),
-        NORMALA_STANDARD = list(
-          tags$div(style = "margin-bottom: 20px;"), 
-          plotOutput("std_normal_var1"),
-          tags$div(style = "margin-bottom: 20px;"), 
-          plotOutput("std_normal_var2"),
-          tags$div(style = "margin-bottom: 20px;"), 
-          plotOutput("std_normal_var3"),
-          tags$div(style = "margin-bottom: 20px;"), 
-          plotOutput("std_normal_var4"),
-          tags$div(style = "margin-bottom: 20px;"), 
-          plotOutput("std_normal_var5")
-        ),
-        NORMALA = list(
-          tags$div(style = "margin-bottom: 20px;"), 
-          plotOutput("normal_var1"),
-          tags$div(style = "margin-bottom: 20px;"), 
-          plotOutput("normal_var2"),
-          tags$div(style = "margin-bottom: 20px;"), 
-          plotOutput("normal_var3"),
-          tags$div(style = "margin-bottom: 20px;"), 
-          plotOutput("normal_var4"),
-          tags$div(style = "margin-bottom: 20px;"), 
-          plotOutput("normal_var5")
-        ),
-        EXPONENTIALA = list(
-          tags$div(style = "margin-bottom: 20px;"), 
-          plotOutput("exponential_var1"),
-          tags$div(style = "margin-bottom: 20px;"), 
-          plotOutput("exponential_var2"),
-          tags$div(style = "margin-bottom: 20px;"), 
-          plotOutput("exponential_var3"),
-          tags$div(style = "margin-bottom: 20px;"), 
-          plotOutput("exponential_var4")
-        ),
-        POISSON = list(
-          tags$div(style = "margin-bottom: 20px;"), 
-          plotOutput("pois_plot_X"),
-          tags$div(style = "margin-bottom: 20px;"), 
-          plotOutput("pois_plot_X_transformed"),
-          tags$div(style = "margin-bottom: 20px;"), 
-          plotOutput("pois_plot_X2"),
-          tags$div(style = "margin-bottom: 20px;"), 
-          plotOutput("pois_plot_X_sum")
-        )
-    )
+  switch(
+    distribution,
+    NORMALA_STANDARD = plotOutput("std_normal_plot"),
+    NORMALA = plotOutput("normal_plot"),
+    EXPONENTIALA = plotOutput("exponential_plot"),
+    BINOMIALA = plotOutput("binom_plot"),
+    POISSON = plotOutput("pois_plot")
+  )
 }

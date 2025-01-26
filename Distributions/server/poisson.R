@@ -1,171 +1,118 @@
-library(ggplot2)
-library(dplyr)
-library(shiny)
-
 create_pois_slider <- function() {
   tagList(
     sliderInput("pois_lambda", "λ:", min = 0.1, max = 10, value = 1, step = 0.1),
     sliderInput("pois_n", "n:", min = 1, max = 100, value = 1, step = 1),
-    sliderInput("pois_xline", "x:", min = 25, max = 1000, value = 25, step = 1)
+    sliderInput("pois_x", "x:", min = 25, max = 1000, value = 25, step = 1),
+    radioButtons(
+      inputId = "pois_var",
+      label = "Selectează variabila aleatoare:",
+      choices = list(
+        "X ~ Pois(λ)" = "var1",
+        "3X - 2 ~ Pois(λ)" = "var2",
+        "X^2 ~ Pois(λ)" = "var3",
+        "Suma cumulativă" = "var4"
+      ),
+      selected = "var1"
+    )
   )
 }
 
-create_pois_plot_X <- function(pois_lambda, pois_n, pois_xline) {
-  renderPlot({
-    lambda <- pois_lambda()
-    xline <- pois_xline()
-
-    # Generate a set of k values (from 0 to 100)
-    X <- 0:25
-
-    # Calculate the CDF for each k value
-    cdf_values <- ppois(X, lambda)
-
-    # Create the plot (without points, only lines)
-    plot(
-      x = NULL, y = NULL,  # Empty plot (no data points displayed)
-      xlim = c(0, xline),     # X-axis limits
-      ylim = c(0, 1),      # Y-axis limits
-      xlab = "Valoarea lui X",    # X-axis label
-      ylab = "Probabilitate Cumulativă", # Y-axis label
-      main = "Funcția de Repartiție X ~ Pois(λ)",
-      las = 1               # Rotate Y-axis labels for readability
-    )
-
-    # Draw horizontal lines for the CDF values
-    for (i in 1:(length(X) - 1)) {
-      lines(
-        c(X[i], X[i+1]),        # X-coordinates (start and end)
-        c(cdf_values[i], cdf_values[i]),      # Y-coordinates (same CDF value for each line)
-        col = "#56B4E9",                      # Line color
-        lwd = 2                               # Line width
+pois_server <- function(input, output, session) {
+  output$pois_plot <- renderPlot({
+    var <- input$pois_var
+    
+    if (var == "var1") {
+      lambda <- input$pois_lambda
+      x <- input$pois_x
+      X <- 0:25
+      cdf_values <- ppois(X, lambda)
+      plot(
+        x = NULL, y = NULL,
+        xlim = c(0, x),
+        ylim = c(0, 1),
+        xlab = "X",
+        ylab = "F(X)",
+        main = "Funcția de repartiție pentru X ~ Pois(λ)",
+        las = 1
       )
+      for (i in 1:(length(X) - 1)) {
+        lines(
+          c(X[i], X[i + 1]),
+          c(cdf_values[i], cdf_values[i]),
+          col = "#339999",
+          lwd = 4
+        )
+      }
+    } else if (var == "var2") {
+      lambda <- input$pois_lambda
+      x <- input$pois_x
+      X <- 0:20
+      X_transformed <- 3 * X - 2
+      cdf_values <- ppois(X, lambda)
+      plot(
+        x = NULL, y = NULL,
+        xlim = c(0, x),
+        ylim = c(0, 1),
+        xlab = "3X - 2",
+        ylab = "F(3X - 2)",
+        main = "Funcția de repartiție pentru 3X - 2 ~ Pois(λ)",
+        las = 1
+      )
+      for (i in 1:(length(X_transformed) - 1)) {
+        lines(
+          c(X_transformed[i], X_transformed[i + 1]),
+          c(cdf_values[i], cdf_values[i]),
+          col = "#FF6666",
+          lwd = 4
+        )
+      }
+    } else if (var == "var3") {
+      lambda <- input$pois_lambda
+      x <- input$pois_x
+      X <- 0:25
+      X_squared <- X^2
+      cdf_values <- ppois(X, lambda)
+      plot(
+        x = NULL, y = NULL,
+        xlim = c(0, x),
+        ylim = c(0, 1),
+        xlab = "X^2",
+        ylab = "F(X^2)",
+        main = "Funcția de repartiție pentru X^2 ~ Pois(λ)",
+        las = 1
+      )
+      for (i in 1:(length(X_squared) - 1)) {
+        lines(
+          c(X_squared[i], X_squared[i + 1]),
+          c(cdf_values[i], cdf_values[i]),
+          col = "#3399FF",
+          lwd = 4
+        )
+      }
+    } else if (var == "var4") {
+      lambda <- input$pois_lambda
+      x <- input$pois_x
+      n <- input$pois_n
+      X <- 0:25
+      lambda <- lambda * n
+      cdf_values <- ppois(X, lambda)
+      plot(
+        x = NULL, y = NULL,
+        xlim = c(0, x),
+        ylim = c(0, 1),
+        xlab = "Sum(Xi)",
+        ylab = "F(Sum(Xi))",
+        main = "Funcția de repartiție pentru Sum(Xi) ~ Pois(λ)",
+        las = 1
+      )
+      for (i in 1:(length(X) - 1)) {
+        lines(
+          c(X[i], X[i + 1]),
+          c(cdf_values[i], cdf_values[i]),
+          col = "#FF9900",
+          lwd = 4
+        )
+      }
     }
   })
-}
-
-
-
-create_pois_plot_X_transformed <- function(pois_lambda, pois_n, pois_xline) {
-  renderPlot({
-    lambda <- pois_lambda()
-    xline <- pois_xline()
-
-    # Generate a set of k values (from 0 to 100)
-    X <- 0:20
-    X_transformed <- 3 * X - 2
-
-    # Calculate the CDF for each k value
-    cdf_values <- ppois(X, lambda)
-
-    # Create the plot (without points, only lines)
-    plot(
-      x = NULL, y = NULL,  # Empty plot (no data points displayed)
-      xlim = c(0, xline),     # X-axis limits
-      ylim = c(0, 1),      # Y-axis limits
-      xlab = "Valoare lui 3X - 2",    # X-axis label
-      ylab = "Probabilitate Cumulativă", # Y-axis label
-      main = "Funcția de Repartiție 3X - 2 ~ Pois(λ)",
-      las = 1               # Rotate Y-axis labels for readability
-    )
-
-    # Draw horizontal lines for the CDF values
-    for (i in 1:(length(X_transformed) - 1)) {
-      lines(
-        c(X_transformed[i], X_transformed[i+1]),        # X-coordinates (start and end)
-        c(cdf_values[i], cdf_values[i]),      # Y-coordinates (same CDF value for each line)
-        col = "#56B4E9",                      # Line color
-        lwd = 2                               # Line width
-      )
-    }
-  })
-}
-
-create_pois_plot_X2 <- function(pois_lambda, pois_n, pois_xline) {
-  renderPlot({
-   lambda <- pois_lambda()
-   xline <- pois_xline()
-
-    # Generate data for X^2
-    X <- 0:25
-    X_squared <- X^2
-
-    # Compute the probability mass function
-    cdf_values <- ppois(X, lambda)
-
-    # Create the plot
-    plot(
-      x = NULL, y = NULL,              # Empty plot (no data points displayed)
-      xlim = c(0, xline),               # X-axis limits
-      ylim = c(0, 1),
-      xlab = "Valoarea lui X^2",       # X-axis label
-      ylab = "Probabilitat Cumulativă", # Y-axis label
-      main = "Funcția de Repartiție X^2 ~ Pois(λ)",
-      las = 1                          # Rotate Y-axis labels for readability
-    )
-
-    # Draw horizontal lines for the CDF values
-    for (i in 1:(length(X_squared) - 1)) {
-      lines(
-        c(X_squared[i], X_squared[i+1]),  # X-coordinates (start and end)
-        c(cdf_values[i], cdf_values[i]),  # Y-coordinates (same CDF value for each line)
-        col = "#56B4E9",                   # Line color
-        lwd = 2                            # Line width
-      )
-    }
-  })
-}
-
-create_pois_plot_X_sum <- function(pois_lambda, pois_n, pois_xline) {
-  renderPlot({
-    lambda <- pois_lambda()
-    xline <- pois_xline()
-    n <- pois_n()
-
-    # Generate data for x1 + x2 + ... + xn
-    X <- 0:25
-    lambda <- lambda * n
-
-
-    # Compute the probability mass function
-    cdf_values <- ppois(X, lambda)
-
-    # Create the plot
-    plot(
-      x = NULL, y = NULL,              # Empty plot (no data points displayed)
-      xlim = c(0, xline),               # X-axis limits
-      ylim = c(0, 1),
-      xlab = "Valoarea lui Sum(Xi)",       # X-axis label
-      ylab = "Probabilitate Cumulativă", # Y-axis label
-      main = "Funcția de Repartiție Sum(Xi) ~ Pois(λ)",
-      las = 1                          # Rotate Y-axis labels for readability
-    )
-
-    # Draw horizontal lines for the CDF values
-    for (i in 1:(length(X) - 1)) {
-      lines(
-        c(X[i], X[i+1]),  # X-coordinates (start and end)
-        c(cdf_values[i], cdf_values[i]),  # Y-coordinates (same CDF value for each line)
-        col = "#56B4E9",                   # Line color
-        lwd = 2                            # Line width
-      )
-    }
-  })
-}
-
-
-
-
-
-pois_server <- function (input, output, session) {
-  # get reactive values for pois
-  pois_lambda <- reactive(input$pois_lambda)
-  pois_n <- reactive(input$pois_n)
-  pois_xline <- reactive(input$pois_xline)
-
-  # render multiple pois plots
-  output$pois_plot_X <- create_pois_plot_X(pois_lambda, pois_n, pois_xline)
-  output$pois_plot_X_transformed <- create_pois_plot_X_transformed(pois_lambda, pois_n, pois_xline)
-  output$pois_plot_X2 <- create_pois_plot_X2(pois_lambda, pois_n, pois_xline)
-  output$pois_plot_X_sum <- create_pois_plot_X_sum(pois_lambda, pois_n, pois_xline)
 }

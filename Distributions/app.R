@@ -1,7 +1,8 @@
-# app.R
+library(shiny)
+library(bslib)
+
 source("utils.R")
 source("ui.R")
 source("server/server.R")
 
-# run on specific port
-shinyApp(ui = ui, server = server, options = list(port = 1234))
+shinyApp(ui = ui, server = server)
