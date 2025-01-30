@@ -1,0 +1,12 @@
+\contentsline {section}{Cerinta I}{2}{}%
+\contentsline {section}{Cerinta III}{7}{}%
+\contentsline {subsection}{Descrierea Problemei}{7}{}%
+\contentsline {subsection}{Aspecte Teoretice}{7}{}%
+\contentsline {subsection}{Reprezent\u {a}ri Grafice}{7}{}%
+\contentsline {subsection}{Pachete Software Folosite}{7}{}%
+\contentsline {subsection}{Codul Aplica\c {t}iei}{7}{}%
+\contentsline {subsubsection}{app.R}{7}{}%
+\contentsline {subsubsection}{ui.R}{8}{}%
+\contentsline {subsection}{Dificult\u {a}\c {t}i Întâmpinate}{8}{}%
+\contentsline {subsection}{Probleme Deschise}{8}{}%
+\contentsline {subsection}{Concluzii}{8}{}%
