@@ -69,14 +69,14 @@ valoriT <- replicate(nrSimulari, simulator())
    ```r
    exact_E_T <- sum(1 / lambda * cumprod(alpha))
    ```
-   - **Rezultat:** $\text{exact\_E\_T} = 9.51299920302413 $
+   - **Rezultat:**  exact_E_T $ = 9.51299920302413 $
    - **Comparație:** Valoarea exactă este foarte apropiată de cea obținută prin simulare.
 
 3. **Probabilitatea de finalizare:**
    ```r
    prob_finalizare <- mean(valoriT >= sum(1 / lambda))
    ```
-   - **Rezultat:** $\text{prob\_finalizare} = 0.00004 $
+   - **Rezultat:** $prob_finalizare = 0.00004 $
 
 4. **Probabilitatea de finalizare într-un timp mai mic sau egal cu $ \sigma $:**
    ```r
