@@ -63,7 +63,7 @@ valoriT <- replicate(nrSimulari, simulator())
    - **Rezultat:** $ approx\_E\_T = 9.51113170988666$
    - **Interpretare:** Distribuția lui $ T $ urmează o distribuție exponențială.
 
-[Diagrama 1](/doc/img/1.png)
+![Diagrama 1](/doc/img/1.png)
 
 2. **Calculul exact al lui $E[T]$:**
    ```r
@@ -100,7 +100,9 @@ valoriT <- replicate(nrSimulari, simulator())
      else return(FALSE)
    }))
    ```
+    ![Diagrama 2](/doc/img/2.png)
    - **Rezultat:** $\text{PStopK} = 0.284293 $ pentru $ k = 5 $
+   ![Diagrama 3](/doc/img/3.png)
 
 ---
 
