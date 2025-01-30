@@ -247,29 +247,77 @@ Se poate observa că o persoană, cu cât ajunge mai departe în etape, cu atât
 
 \newpage
 
+\section*{Cerinta II}
+\addcontentsline{toc}{section}{Cerinta II}
+
+\subsection*{Mesaj pentru Sebi: (Pula n-are scoala ca sta sub banca)}
+
+\newpage
+
 \section*{Cerinta III}
 \addcontentsline{toc}{section}{Cerinta III}
 
 \subsection*{Descrierea Problemei}
 \addcontentsline{toc}{subsection}{Descrierea Problemei}
 
-Scopul acestui proiect este de a construi o aplica\c{t}ie web interactiv\u{a} folosind framework-ul \textbf{Shiny} din \textbf{R}, pentru a reprezenta grafic func\c{t}iile de reparti\c{t}ie (CDF) ale unor variabile aleatoare definite conform cerin\c{t}ei din enun\c{t}. Aplica\c{t}ia permite vizualizarea CDF-urilor pentru distribu\c{t}ii normale, exponen\c{t}iale, binomiale, Poisson, precum \c{s}i combina\c{t}ii ale acestora.
+Scopul acestui proiect este de a construi o aplica\c{t}ie web interactiv\u{a} folosind framework-ul \textbf{Shiny} din \textbf{R}, pentru a reprezenta grafic func\c{t}iile de reparti\c{t}ie (CDF) ale unor variabile aleatoare definite conform cerin\c{t}ei din enun\c{t}. Aplica\c{t}ia permite vizualizarea CDF-urilor pentru distribu\c{t}ii normale, exponen\c{t}iale, binomiale, Poisson.
 
 \subsection*{Aspecte Teoretice}
 \addcontentsline{toc}{subsection}{Aspecte Teoretice}
 Pentru dezvoltarea aplica\c{t}iei, am utilizat urm\u{a}toarele aspecte teoretice importante:
 
 \begin{itemize}
-    \item \textbf{Distribu\c{t}ia Normal\u{a}}: Este definit\u{a} ca o variabil\u{a} aleatoare continu\u{a} $X \sim N(\mu, \sigma^2)$, unde $\mu$ reprezint\u{a} media, iar $\sigma^2$ varian\c{t}a.
-    \item \textbf{Distribu\c{t}ia Exponen\c{t}ial\u{a}}: O variabil\u{a} aleatoare $X \sim \text{Exp}(\lambda)$ este folosit\u{a} pentru modelarea timpilor de a\c{s}teptare între evenimente.
-    \item \textbf{Distribu\c{t}ia Poisson}: Reprezint\u{a} num\u{a}rul de evenimente într-un interval fix de timp \c{s}i este notat\u{a} $X \sim \text{Poisson}(\lambda)$.
-    \item \textbf{Distribu\c{t}ia Binomial\u{a}}: Este definit\u{a} de parametrii $n$ \c{s}i $p$ \c{s}i descrie num\u{a}rul de succese în $n$ experimente independente.
+  \item \textbf{Distribu\c{t}ia Normal\u{a}}: Este definit\u{a} ca o variabil\u{a} aleatoare continu\u{a} $X \sim N(\mu, \sigma^2)$, unde $\mu$ reprezint\u{a} media, iar $\sigma^2$ varian\c{t}a.
+  \newline
+  Formula funcției de repartiție cumulativă:
+  \[
+  F(x) = P(X \leq x) = \int_{-\infty}^{x} \frac{1}{\sqrt{2\pi \sigma^2}} e^{-\frac{(t - \mu)^2}{2\sigma^2}} \, dt
+  \]
+
+  \item \textbf{Distribu\c{t}ia Exponen\c{t}ial\u{a}}: O variabil\u{a} aleatoare $X \sim \text{Exp}(\lambda)$ este folosit\u{a} pentru modelarea timpilor de a\c{s}teptare între evenimente.
+  \newline
+  Formula funcției de repartiție cumulativă:
+  \[
+  F(x) = P(X \leq x) = 
+  \begin{cases}
+  1 - e^{-\lambda x}, & \text{pentru } x \geq 0 \\
+  0, & \text{pentru } x < 0
+  \end{cases}
+  \]
+
+  \item \textbf{Distribu\c{t}ia Poisson}: Reprezint\u{a} num\u{a}rul de evenimente într-un interval fix de timp \c{s}i este notat\u{a} $X \sim \text{Poisson}(\lambda)$.
+  \newline
+  Formula funcției de repartiție cumulativă:
+  \[
+  F(x) = P(X \leq x) = \sum_{k=0}^{\lfloor x \rfloor} \frac{\lambda^k e^{-\lambda}}{k!}
+  \]
+
+  \item \textbf{Distribu\c{t}ia Binomial\u{a}}: Este definit\u{a} de parametrii $n$ \c{s}i $p$ \c{s}i descrie num\u{a}rul de succese în $n$ experimente independente.
+  \newline
+  Formula funcției de repartiție cumulativă:
+  \[
+  F(x) = P(X \leq x) = \sum_{k=0}^{\lfloor x \rfloor} \binom{n}{k} p^k (1 - p)^{n - k}
+  \]
 \end{itemize}
+
+\newpage
 
 \subsection*{Reprezent\u{a}ri Grafice}
 \addcontentsline{toc}{subsection}{Reprezent\u{a}ri Grafice}
 
 Aplica\c{t}ia ofer\u{a} reprezent\u{a}ri grafice ale func\c{t}iilor de reparti\c{t}ie pentru fiecare dintre variabilele aleatoare definite în cerin\c{t}e. În cele ce urmeaz\u{a}, vom ilustra c\u{a}teva capturi de ecran din aplica\c{t}ie.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./img/4.png}
+  \label{fig:imaginea_ta_3}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./img/5.png}
+  \label{fig:imaginea_ta_3}
+\end{figure}
 
 \subsection*{Pachete Software Folosite}
 \addcontentsline{toc}{subsection}{Pachete Software Folosite}
@@ -282,13 +330,18 @@ Am folosit urm\u{a}toarele pachete software pentru implementarea proiectului:
     \item \textbf{graphics}: Generarea reprezent\u{a}rilor grafice ale func\c{t}iilor de reparti\c{t}ie.
 \end{itemize}
 
+\newpage
+
 \subsection*{Codul Aplica\c{t}iei}
 \addcontentsline{toc}{subsection}{Codul Aplica\c{t}iei}
 
-Mai jos este prezentat codul surs\u{a} al aplica\c{t}iei, împreun\u{a} cu comentarii relevante.
+Codul aplicației a fost structurat în mai multe fișiere pentru a asigura o separare clară a logicii și o reutilizare ușoară a funcțiilor. Această abordare are ca scop evitarea redundanței și îmbunătățirea clarității codului, permițând adăugarea sau modificarea distribuțiilor fără a afecta structura generală a aplicației.
 
 \subsubsection*{app.R}
 \addcontentsline{toc}{subsubsection}{app.R}
+
+Fișierul principal \textbf{app.R} conține doar partea de inițializare a aplicației Shiny, inclusiv încărcarea fișierelor \texttt{ui.R}, \texttt{utils.R} și \texttt{server/server.R}. Aceasta facilitează gestionarea centralizată a componentelor aplicației.
+Fiecare distribuție are propriile fișiere în directorul \texttt{server}, în care sunt definite logicile de generare a graficelor corespunzătoare.
 
 \begin{lstlisting}[language=R, basicstyle=\ttfamily\footnotesize, keywordstyle=\color{blue}\bfseries, commentstyle=\color{green!60!black}, stringstyle=\color{orange}]
 library(shiny)
@@ -304,58 +357,277 @@ shinyApp(ui = ui, server = server)
 \subsubsection*{ui.R}
 \addcontentsline{toc}{subsubsection}{ui.R}
 
+Interfața utilizatorului este creată folosind funcția \texttt{fluidPage}, care organizează interfața pe tab-uri, câte unul pentru fiecare distribuție (normală, exponențială, binomială, Poisson). Fiecare tab este generat folosind funcția personalizată \texttt{create\_tab}, care asociază un input specific distribuției respective și o zonă de afișare a graficului.
+
 \begin{lstlisting}[language=R]
-# Generarea interfe\c{t}ei aplica\c{t}iei.
-create_tab <- function(tab_title, title, distribution) {
-  tabPanel(
-    tab_title,
-    div(
-      class = "container",
-      h1(title),
+  source("server/server.R")
+
+  create_tab <- function(tab_title, title, distribution) {
+    tabPanel(
+      tab_title,
       div(
-        class = "row",
+        class = "container",
+        h1(title),
         div(
-          class = "col-4",
-          tags$h3("Input:"),
-          switch(
-            distribution,
-            BINOMIALA = create_binom_slider(),
-            NORMALA_STANDARD = create_std_normal_slider(),
-            NORMALA = create_normal_slider(),
-            EXPONENTIALA = create_exponential_slider(),
-            POISSON = create_pois_slider()
+          class = "row",
+          div(
+            class = "col-4",
+            tags$h3("Input:"),
+            switch(
+              distribution,
+              BINOMIALA = create_binom_slider(),
+              NORMALA_STANDARD = create_std_normal_slider(),
+              NORMALA = create_normal_slider(),
+              EXPONENTIALA = create_exponential_slider(),
+              POISSON = create_pois_slider()
+            )
+          ),
+          div(
+            class = "col-8",
+            h4("Reprezentare Grafica"),
+            get_output_distribution(distribution)
           )
-        ),
-        div(
-          class = "col-8",
-          h4("Reprezentare Grafic\u{a}"),
-          get_output_distribution(distribution)
         )
       )
     )
-  )
-}
+  }
+  
+  ui <- fluidPage(
+    theme = bs_theme(
+      version = 4, 
+      bg = "#101010", 
+      fg = "#FFF", 
+      primary = "#E69F00", 
+      base_font = font_google("Inconsolata")
+    ),
+    navbarPage(
+      "CDF",
+      create_tab(
+        "Normala Standard",
+        "Functia de repartitie (CDF)",
+        NORMALA_STANDARD
+      ),
+      create_tab(
+        "Normala",
+        "Functia de repartitie (CDF)",
+        NORMALA
+      ),
+      create_tab(
+        "Exponentiala",
+        "Functia de repartitie (CDF)",
+        EXPONENTIALA
+      ),
+      create_tab(
+        "Binomiala",
+        "Functia de repartitie (CDF)",
+        BINOMIALA
+      ),
+      create_tab(
+        "Poisson",
+        "Functia de repartitie (CDF)",
+        POISSON
+      )
+    )
+  )  
+\end{lstlisting}
+
+\subsubsection*{server.R}
+\addcontentsline{toc}{subsubsection}{server.R}
+
+Acesta este punctul central al logicii serverului. Codul serverului include apeluri către fișierele individuale ale fiecărei distribuții, cum ar fi \texttt{std\_normal.R}, \texttt{normal.R}, \texttt{binom.R} etc. Acest lucru permite fiecărei distribuții să fie tratată separat și modular, facilitând adăugarea sau modificarea distribuțiilor fără a afecta alte componente.
+
+\begin{lstlisting}[language=R]
+  source("server/std_normal.R")
+  source("server/normal.R")
+  source("server/exponential.R")
+  source("server/binom.R")
+  source("server/poisson.R")
+  
+  server <- function(input, output, session) {
+    std_normal_server(input, output, session)
+    normal_server(input, output, session)
+    exponential_server(input, output, session)
+    binom_server(input, output, session)
+    pois_server(input, output, session)
+  }
+  
+\end{lstlisting}
+
+\subsubsection*{utils.R}
+\addcontentsline{toc}{subsubsection}{utils.R}
+
+Acest fișier conține definiții comune, cum ar fi identificatorii fiecărei distribuții și funcția \texttt{get\_output\_distribution}, care returnează componenta grafică potrivită pentru distribuția selectată. Aceasta contribuie la eliminarea duplicării codului și la centralizarea logicii de redirecționare a graficelor.
+
+\begin{lstlisting}[language=R]
+  NORMALA_STANDARD <- "NORMALA_STANDARD"
+  NORMALA <- "NORMALA"
+  EXPONENTIALA <- "EXPONENTIALA"
+  BINOMIALA <- "BINOMIALA"
+  POISSON <- "POISSON"
+  
+  get_output_distribution <- function(distribution) {
+    switch(
+      distribution,
+      NORMALA_STANDARD = plotOutput("std_normal_plot"),
+      NORMALA = plotOutput("normal_plot"),
+      EXPONENTIALA = plotOutput("exponential_plot"),
+      BINOMIALA = plotOutput("binom_plot"),
+      POISSON = plotOutput("pois_plot")
+    )
+  }
+\end{lstlisting}
+
+\subsubsection*{normals.R}
+\addcontentsline{toc}{subsubsection}{normals.R}
+
+\paragraph{Generarea graficelor:}  
+Codul pentru reprezentarea grafică este similar pentru toate distribuțiile, însă exemplificarea este prezentată doar pentru distribuția normală în fișierul \texttt{normals.R}.  
+Fiecare grafic este generat pe baza parametrilor selectați de utilizator (cum ar fi media \(\mu\) și deviația standard \(\sigma\)) și utilizează funcția corespunzătoare de calcul al funcției de repartitie cumulativă. Iată principalele tipuri de grafice generate:
+
+- **Graficul funcției de repartitie cumulativă (CDF)**: Este reprezentată funcția \( F(x) = P(X \leq x) \), calculată cu funcția R corespunzătoare fiecărei distribuții (de exemplu, \texttt{pnorm} pentru distribuția normală).
+  
+- **Transformări ale variabilelor**: De exemplu, pentru \( 3 - 2X \) sau \( X^2 \), transformările sunt aplicate asupra datelor înainte de a calcula și reprezenta \( F(x) \).
+  
+- **Sumă cumulativă**: Pentru a reprezenta suma cumulativă \( \sum X_i \) sau \( \sum X_i^2 \), se utilizează funcția \texttt{cumsum} din R, iar graficul este construit prin afișarea acestor sume pentru fiecare \( n \).
+
+\begin{lstlisting}[language=R]
+  create_normal_slider <- function() {
+    tagList(
+      sliderInput(
+        inputId = "normal_n",
+        label = "Selecteaza valoarea n:",
+        min = 1,
+        max = 100,
+        value = 10,
+        step = 1
+      ),
+      sliderInput(
+        inputId = "normal_mu",
+        label = "Media (\u03BC):",
+        min = 1,
+        max = 100,
+        value = 10,
+        step = 1
+      ),
+      sliderInput(
+        inputId = "normal_sigma",
+        label = "Deviatia standard (\u03C3):",
+        min = 1,
+        max = 100,
+        value = 10,
+        step = 1
+      ),
+      radioButtons(
+        inputId = "normal_var",
+        label = "Selecteaza variabila aleatoare:",
+        choices = list(
+          "X ~ N(\u03BC, \u03C3^2)" = "var1",
+          "3 - 2X ~ N(\u03BC, \u03C3^2)" = "var2",
+          "X^2 ~ N(\u03BC, \u03C3^2)" = "var3",
+          "Suma cumulativa" = "var4",
+          "Suma patratelor" = "var5"
+        ),
+        selected = "var1"
+      )
+    )
+  }
+  
+  normal_server <- function(input, output, session) {
+    output$normal_plot <- renderPlot({
+      var <- input$normal_var
+      
+      if (var == "var1") {
+        x <- seq(-10, 10, length.out = 500)
+        cdf_values <- pnorm(x, mean = input$normal_mu, sd = input$normal_sigma)
+        plot(
+          x, cdf_values,
+          type = "l",
+          lwd = 4,
+          col = "#339999",
+          xlab = "X",
+          ylab = "F(X)",
+          main = "Functia de repartitie pentru X ~ N(\u03BC, \u03C3^2)"
+        )
+      } else if (var == "var2") {
+        x <- seq(-10, 10, length.out = 500)
+        transformed_x <- 3 - 2 * x
+        cdf_values <- pnorm(transformed_x, mean = input$normal_mu, sd = input$normal_sigma)
+        plot(
+          x, cdf_values,
+          type = "l",
+          lwd = 4,
+          col = "#FF6666",
+          xlab = "3 - 2X",
+          ylab = "F(3 - 2X)",
+          main = "Functia de repartitie pentru 3 - 2X ~ N(\u03BC, \u03C3^2)"
+        )
+      } else if (var == "var3") {
+        x <- seq(-10, 10, length.out = 500)
+        transformed_x <- x^2
+        cdf_values <- pnorm(transformed_x, mean = input$normal_mu, sd = input$normal_sigma)
+        plot(
+          x, cdf_values,
+          type = "l",
+          lwd = 4,
+          col = "#3399FF",
+          xlab = "X^2",
+          ylab = "F(X^2)",
+          main = "Functia de repartitie pentru X^2 ~ N(\u03BC, \u03C3^2)"
+        )
+      } else if (var == "var4") {
+        n <- input$normal_n
+        X <- rnorm(n, mean = input$normal_mu, sd = input$normal_sigma)
+        S_n <- cumsum(X)
+        plot(
+          1:n, S_n,
+          type = "l",
+          lwd = 2,
+          col = "#FF9900",
+          xlab = "n",
+          ylab = "\u2211 X_i",
+          main = "Suma cumulativa a variabilelor aleatoare X_i"
+        )
+      } else if (var == "var5") {
+        n <- input$normal_n
+        X <- rnorm(n, mean = input$normal_mu, sd = input$normal_sigma)
+        S_n2 <- cumsum(X^2)
+        plot(
+          1:n, S_n2,
+          type = "l",
+          lwd = 2,
+          col = "#33CC33",
+          xlab = "n",
+          ylab = "\u2211 X_i^2",
+          main = "Suma cumulativa a patratelor variabilelor X_i"
+        )
+      }
+    })
+  }
 \end{lstlisting}
 
 \subsection*{Dificult\u{a}\c{t}i Întâmpinate}
 \addcontentsline{toc}{subsection}{Dificult\u{a}\c{t}i Întâmpinate}
 
+Dezvoltarea aplicației a implicat rezolvarea unor provocări tehnice importante legate de gestionarea parametrilor și a reprezentărilor grafice pentru fiecare distribuție. Principalele dificultăți întâmpinate sunt:
+
 \begin{itemize}
-    \item Ajustarea automată a parametrilor pentru fiecare distribuție.
-    \item Reprezentarea grafică a unor transformări mai complexe.
+    \item \textbf{Ajustarea automată a parametrilor pentru fiecare distribuție:}  
+    Fiecare distribuție are un set unic de parametri care trebuie adaptați corect pentru a asigura o reprezentare grafică precisă a funcției de repartitie cumulativă (CDF). De exemplu, distribuția normală implică media \(\mu\) și deviația standard \(\sigma\), în timp ce distribuția binomială depinde de numărul de experimente \(n\) și probabilitatea de succes \(p\). Provocarea a fost legată de crearea unui sistem flexibil în care utilizatorul să poată modifica rapid parametrii în interfață, iar graficele să se actualizeze automat în funcție de aceștia. Această problemă a fost rezolvată prin implementarea unor funcții modulare (de exemplu, \texttt{create\_normal\_slider()} și \texttt{create\_binom\_slider()}) care generează dinamic controale de input specifice fiecărei distribuții.
 \end{itemize}
 
 \subsection*{Probleme Deschise}
 \addcontentsline{toc}{subsection}{Probleme Deschise}
 
+Deși aplicația funcționează corespunzător și oferă o interfață interactivă pentru vizualizarea funcțiilor de repartitie cumulativă, există câteva direcții de dezvoltare viitoare și probleme deschise:
+
 \begin{itemize}
-    \item Posibilitatea extinderii aplicației pentru a suporta și alte distribuții.
-    \item Implementarea testelor statistice pentru variabilele simulate.
+    \item \textbf{Posibilitatea extinderii aplicației pentru a suporta și alte distribuții:}  
+    Momentan, aplicația suportă distribuțiile normală, exponențială, binomială și Poisson. Cu toate acestea, există o varietate de alte distribuții utile în statistică, cum ar fi distribuțiile Bernoulli, binomiale sau geometrice, care ar putea fi integrate cu ușurință în structura modulară a aplicației. O extindere în această direcție ar implica adăugarea fișierelor corespunzătoare în directorul \texttt{server} și crearea funcțiilor de input specifice fiecărei noi distribuții.
 \end{itemize}
 
 \subsection*{Concluzii}
 \addcontentsline{toc}{subsection}{Concluzii}
 
-Aplicația dezvoltata oferă o platformă interactivă utilă pentru vizualizarea funcțiilor de repartiție ale variabilelor aleatoare și poate fi extinsă cu ușurință pentru a adăuga noi funcționalități și distribuții.
+Funcționalitățile existente permit utilizatorilor să vizualizeze funcțiile de repartitie ale variabilelor normale, exponențiale, binomiale și Poisson, dar structura modulară face posibilă integrarea rapidă a altor distribuții. De asemenea, prin intermediul graficelor dinamice, utilizatorii pot explora nu doar distribuțiile de bază, ci și diverse transformări ale variabilelor aleatoare, cum ar fi transformări liniare și sume cumulative.
 
 \end{document}
