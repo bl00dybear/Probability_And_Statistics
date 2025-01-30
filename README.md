@@ -176,26 +176,26 @@ Scopul acestui proiect este de a construi o aplicație web interactivă folosind
   
 ```
 - **Distribuția Exponențială:**  
-  \( X \sim \text{Exp}(\lambda) \)  
-  \[
+  $( X \sim \text{Exp}(\lambda) )$
+```math  
   F(x) = 
   \begin{cases}
   1 - e^{-\lambda x}, & \text{pentru } x \geq 0 \\
   0, & \text{pentru } x < 0
   \end{cases}
-  \]
+```
 
 - **Distribuția Poisson:**  
-  \( X \sim \text{Poisson}(\lambda) \)  
-  \[
+  $( X \sim \text{Poisson}(\lambda) )$  
+```math
   F(x) = \sum_{k=0}^{\lfloor x \rfloor} \frac{\lambda^k e^{-\lambda}}{k!}
-  \]
+```
 
 - **Distribuția Binomială:**  
-  \( X \sim \text{Binomial}(n, p) \)  
-  \[
+  $( X \sim \text{Binomial}(n, p) )$  
+```math
   F(x) = \sum_{k=0}^{\lfloor x \rfloor} \binom{n}{k} p^k (1 - p)^{n - k}
-  \]
+```
 
 ### Reprezentări Grafice
 
