@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1738274988.05791 "/home/sebi/Probability_And_Statistics/doc/doc.tex" "doc.pdf" "doc" 1738274989.43524 0
+["pdflatex"] 1738280385.51521 "/home/sebi/Probability_And_Statistics/doc/doc.tex" "doc.pdf" "doc" 1738280386.90974 0
   "/etc/texmf/web2c/texmf.cnf" 1738245788.92343 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/sebi/Probability_And_Statistics/doc/doc.tex" 1738274987.84757 38170 4e9fa36f1847901546f3773e75b84431 ""
+  "/home/sebi/Probability_And_Statistics/doc/doc.tex" 1738280383.80766 41956 9e7d8b7471c91e7bddc2fa61aa2da6ab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1136768653 1536 02c06700a42be0f5a28664c7273f82e7 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tctt0900.tfm" 1136768653 1536 bda3e6bf9784a4cc572c754e0c3eeb00 ""
@@ -88,9 +88,9 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1707919699 40399 f2c302f7d2af602abb742093540a5834 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1738245812.47553 5472669 54eaf61a88b6b7896ebd0dac973cb29c ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1738245908 8212928 cbf6cf6486557c4ef8887395b36e70c5 ""
-  "doc.aux" 1738274989.3656 2394 97f54d0c7be0049d7b1b8f28805c2846 "pdflatex"
-  "doc.tex" 1738274987.84757 38170 4e9fa36f1847901546f3773e75b84431 ""
-  "doc.toc" 1738274989.3656 1123 a06ca7b3dfab25c8812aa39dbfabda95 "pdflatex"
+  "doc.aux" 1738280386.83868 3285 984e51b960c83695192b08185a36a234 "pdflatex"
+  "doc.tex" 1738280383.80766 41956 9e7d8b7471c91e7bddc2fa61aa2da6ab ""
+  "doc.toc" 1738280386.83968 1604 d8bc53177acab3b2531c72b407632a95 "pdflatex"
   "img/1.png" 1738259624.81483 34135 fc0c53a75043ff4fa1b2b801cad13fc8 ""
   "img/2.png" 1738259624.81483 49499 f68ee53711eafb0ebb084222c109dfe7 ""
   "img/3.png" 1738259624.81483 67937 2abc606493c13af2182871ffb1486c19 ""

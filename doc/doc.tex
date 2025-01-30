@@ -52,6 +52,8 @@
 \addcontentsline{toc}{section}{Cerinta I}
 
 \subsection*{Descrierea Problemei}
+\addcontentsline{toc}{subsection}{Descrierea Problemei}
+
 
 Se consideră o activitate care presupune parcurgerea secvențială a \( n \) etape. Timpul necesar finalizării etapei \( i \) de către o persoană \( A \) este o variabilă aleatoare \( T_i \sim \text{Exp}(\lambda_i) \).
 
@@ -85,7 +87,7 @@ simulator <- function() {
 valoriT <- replicate(nrSimulari, simulator())
 \end{lstlisting}
 \textbf{1. Construiți un algoritm în R care simulează $10^6$ valori pentru v.a. $T$ și în \\baza acestora aproximați $E(T)$. Reprezentați grafic într-o manieră adecvată valorile \\obținute pentru $T$. Ce puteți spune despre repartiția lui $T$?}
-
+\addcontentsline{toc}{subsection}{Exercitiul 1}
 \begin{lstlisting}[language=R]
 approx_E_T <- mean(valoriT)
 
@@ -111,6 +113,7 @@ approx_E_T = 9.51113170988666
 \end{lstlisting}
 
 \textbf{2. Calculați valoarea exactă a lui $E[T]$ și comparați cu valoarea obținută prin \\simulare.}
+\addcontentsline{toc}{subsection}{Exercitiul 2}
 \begin{lstlisting}[language=R]
 exact_E_T <- sum(1 / \lambda * cumprod(alpha))
 \end{lstlisting}
@@ -132,6 +135,7 @@ Am folosit funcția \texttt{cumprod}, care returnează un vector cu produsul cum
 \end{lstlisting}
 
 \textbf{3. În baza simulărilor de la 1. aproximați probabilitatea ca persoana A să finalizeze activitatea.}
+\addcontentsline{toc}{subsection}{Exercitiul 3}
 \begin{lstlisting}[language=R]
     prob_finalizare <- mean(valoriT >= sum(1 / lambda))
 \end{lstlisting}
@@ -148,6 +152,7 @@ In scrierea codului am calculat valoarea teoretica a timpului total pe care o pe
 \end{lstlisting}
 
 \textbf{4. \^{I}n baza simul\u{a}rilor de la 1. aproxima\c{t}i probabilitatea ca persoana A s\u{a} finalizeze activitatea \^{i}ntr-un timp mai mic sau egal cu $\sigma$ . }
+\addcontentsline{toc}{subsection}{Exercitiul 4}
 
 \begin{lstlisting}[language=R]
     sigma <-94
@@ -164,6 +169,7 @@ Ne-am folosit de modalitatea de rezolvare a exercitiului anterior, astfel am fol
 \end{lstlisting}
 
 \textbf{5. \^{I}n baza simul\u{a}rilor de la 1. determina\c{t}i timpul minim și respectiv timpul maxim \^{i}n care persoana A finalizeaz\u{a} activitatea și reprezenta\c{t}i grafic timpii de finalizare a activit\u{a}\c{t}ii din fiecare simulare. Ce puteți spune despre repartiția acestor timpi de finalizare a activit\u{a}\c{t}ii?}
+\addcontentsline{toc}{subsection}{Exercitiul 5}
 \begin{lstlisting}[language=R]
     timpMin <- min(valoriT[valoriT >= sum(1 / lambda)] )
     timpMax <- max(valoriT[valoriT >= sum(1 / lambda)] )
@@ -191,6 +197,7 @@ Am considerat variabilele \texttt{timpMin} și \texttt{timpMax} pentru valorile 
 \end{lstlisting}
 
 \textbf{6. \^{I}n baza simul\u{a}rilor de la 1. aproxima\c{t}i probabilitatea ca persoana A s\u{a} se opreasc\u{a} din lucru \^{i}nainte de etapa k , unde 1$<$k$\leq$n . Reprezenta\c{t}i grafic probabilit\u{a}\c{t}ile ob\c{t}inute \^{i}ntr-o manier\u{a} corespunz\u{a}toare. Ce pute\c{t}i spune despre reparti\c{t}ia probabilit\u{a}\c{t}ilor ob\c{t}inute?}
+\addcontentsline{toc}{subsection}{Exercitiul 6}
 
 \begin{lstlisting}[language=R]
     k <- 5
@@ -421,71 +428,133 @@ Interfața utilizatorului este creată folosind funcția \texttt{fluidPage}, car
     )
   )
 }
-
 ui <- fluidPage(
   theme = bs_theme(version = 4, bg = "#101010", fg = "#FFF", primary = "#E69F00", 
-                                                base_font = font_google("Inconsolata")),
+                                            base_font = font_google("Inconsolata")),
   navbarPage(
     "Repartitia Negativ Binomiala",
     create_tab(
-              "Formularea 1",
-              "Numarul de esecuri inainte de a obtine un numar fix de succese (r)", 
-              "https://wikimedia.org/api/rest_v1/media/math/render/svg/1a26b86be5f2...",
-              "https://wikimedia.org/api/rest_v1/media/math/render/svg/29944ccb6e33...",
-              1,
-              "Testarea produselor pana la gasirea unui numar fix de defecte",
-              "O companie produce componente electronice si doreste sa testeze cate ...",
-              "Numarul de incercari pana la a prinde un numar fix de pesti",
-              "Un pescar merge la pescuit si doreste sa prinda un numar fix de pesti..."),
+          "Formularea 1",
+          "Numarul de esecuri inainte de a obtine un numar fix de succese (r)", 
+          "https://wikimedia.org/api/rest_v1/media/math/render/svg/1a26b86be5f2...",
+          "https://wikimedia.org/api/rest_v1/media/math/render/svg/29944ccb6e33...",
+          1,
+          "Testarea produselor pana la gasirea unui numar fix de defecte",
+          "O companie produce componente electronice si doreste sa testeze cate ...",
+          "Numarul de incercari pana la a prinde un numar fix de pesti",
+          "Un pescar merge la pescuit si doreste sa prinda un numar fix de pesti..."),
     create_tab(
-              "Formularea 2", 
-              "Numarul total de incercari necesare pentru a obtine un numar fix ...",
-              "https://wikimedia.org/api/rest_v1/media/math/render/svg/ccc5e37984e75...",
-              "https://wikimedia.org/api/rest_v1/media/math/render/svg/122b97516ba76...",
-              2,
-              "Testarea medicamentelor pana la obtinerea unui numar fix de ...",
-              "Un cercetator testeaza un nou medicament si doreste sa obtina un numar ...",
-              "Numarul de aruncari ale unui zar pana la obtinerea unui numar fix de sase",
-              "Un jucator arunca un zar si doreste sa obtina un numar fix de sase..."),
+          "Formularea 2", 
+          "Numarul total de incercari necesare pentru a obtine un numar fix ...",
+          "https://wikimedia.org/api/rest_v1/media/math/render/svg/ccc5e37984e75...",
+          "https://wikimedia.org/api/rest_v1/media/math/render/svg/122b97516ba76...",
+          2,
+          "Testarea medicamentelor pana la obtinerea unui numar fix de ...",
+          "Un cercetator testeaza un nou medicament si doreste sa obtina un numar ...",
+          "Numarul de aruncari ale unui zar pana la obtinerea unui numar fix de sase",
+          "Un jucator arunca un zar si doreste sa obtina un numar fix de sase..."),
     create_tab(
-              "Formularea 3",
-              "Numarul total de incercari necesare pentru a obtine un numar ...",
-              "https://wikimedia.org/api/rest_v1/media/math/render/svg/ccc5e37984e...",
-              "https://wikimedia.org/api/rest_v1/media/math/render/svg/7fd538f62a6...",
-              3,
-              "Testarea produselor pana la gasirea unui numar fix de produse neconforme",
-              "Un controlor de calitate testeaza produse si doreste sa gaseasca un ...",
-              "Numarul de intrebari pana la obtinerea unui numar fix de raspunsuri gresite",
-              "Un student raspunde la intrebari si doreste sa obtina un numar fix ...",
+          "Formularea 3",
+          "Numarul total de incercari necesare pentru a obtine un numar ...",
+          "https://wikimedia.org/api/rest_v1/media/math/render/svg/ccc5e37984e...",
+          "https://wikimedia.org/api/rest_v1/media/math/render/svg/7fd538f62a6...",
+          3,
+          "Testarea produselor pana la gasirea unui numar fix de produse neconforme",
+          "Un controlor de calitate testeaza produse si doreste sa gaseasca un ...",
+          "Numarul de intrebari pana la obtinerea unui numar fix de raspunsuri gresite",
+          "Un student raspunde la intrebari si doreste sa obtina un numar fix ...",
     create_tab(
-              "Formularea 4",
-              "Numarul de succese inainte de a obtine un numar fix de esecuri (r)",
-              "https://wikimedia.org/api/rest_v1/media/math/render/svg/1a26b86be5f...",
-              "https://wikimedia.org/api/rest_v1/media/math/render/svg/5d39d1344ae...",
-              4,
-              "Numarul de clienti satisfacuti inainte de a obtine un numar fix de ...",
-              "Un magazin doreste sa obtina un numar fix de reclamatii de la clienti. ...",
-              "Numarul de lovituri la tinta inainte de a obtine un numar fix de rateuri",
-              "Un sportiv trage la tinta si doreste sa obtina un numar fix de rateuri..."),
+          "Formularea 4",
+          "Numarul de succese inainte de a obtine un numar fix de esecuri (r)",
+          "https://wikimedia.org/api/rest_v1/media/math/render/svg/1a26b86be5f...",
+          "https://wikimedia.org/api/rest_v1/media/math/render/svg/5d39d1344ae...",
+          4,
+          "Numarul de clienti satisfacuti inainte de a obtine un numar fix de ...",
+          "Un magazin doreste sa obtina un numar fix de reclamatii de la clienti. ...",
+          "Numarul de lovituri la tinta inainte de a obtine un numar fix de rateuri",
+          "Un sportiv trage la tinta si doreste sa obtina un numar fix de rateuri..."),
     create_tab(
-              "Formularea 5",
-              "Numarul de succese intr-un numar fix de incercari (n)",
-              "https://wikimedia.org/api/rest_v1/media/math/render/svg/d23e3ebeb017f...",
-              "https://wikimedia.org/api/rest_v1/media/math/render/svg/09ed5ae47e20d...",
-              5,
-              "Numarul de raspunsuri corecte la un test cu un numar fix de intrebari",
-              "Un student raspunde la un test cu un numar fix de intrebari. Fiecare ...",
-              "Numarul de produse conform intr-un lot de dimensiune fixa",
-              "Un lot de produse este testat, iar fiecare produs este un ...")
+          "Formularea 5",
+          "Numarul de succese intr-un numar fix de incercari (n)",
+          "https://wikimedia.org/api/rest_v1/media/math/render/svg/d23e3ebeb017f...",
+          "https://wikimedia.org/api/rest_v1/media/math/render/svg/09ed5ae47e20d...",
+          5,
+          "Numarul de raspunsuri corecte la un test cu un numar fix de intrebari",
+          "Un student raspunde la un test cu un numar fix de intrebari. Fiecare ...",
+          "Numarul de produse conform intr-un lot de dimensiune fixa",
+          "Un lot de produse este testat, iar fiecare produs este un ...")
     )
   )
 \end{lstlisting}
 
+\subsubsection*{server.R}
+\addcontentsline{toc}{subsubsection}{server.R}
 
+Acesta este punctul central al logicii serverului.
 
+\begin{lstlisting}[language=R]
+  source("server/form_1.R")
+  source("server/form_2.R")
+  source("server/form_3.R")
+  source("server/form_4.R")
+  source("server/form_5.R")
+  source("server/global.R")
+  
+  
+  server <- function(input, output, session) {
+    # Creare reactive pentru fiecare tab
+    reactive_values1 <- create_reactive_values(input, session, "1")
+    reactive_values2 <- create_reactive_values(input, session, "2")
+    reactive_values3 <- create_reactive_values(input, session, "3")
+    reactive_values4 <- create_reactive_values(input, session, "4")
+    reactive_values5 <- create_reactive_values(input, session, "5")
+    
+    output$mass_function_plot_1 <- render_plot_1(reactive_values1$r_value, 
+                                                      reactive_values1$p_value)
+    output$mass_function_plot_2 <- render_plot_2(reactive_values2$r_value, 
+                                                      reactive_values2$p_value)
+    output$mass_function_plot_3 <- render_plot_3(reactive_values3$r_value, 
+                                                      reactive_values3$p_value)
+    output$mass_function_plot_4 <- render_plot_4(reactive_values4$r_value, 
+                                                      reactive_values4$p_value)
+    output$mass_function_plot_5 <- render_plot_5(reactive_values5$r_value, 
+                                                      reactive_values5$p_value)
+  }
+\end{lstlisting}
 
+\subsubsection*{formularea1.R}
+\addcontentsline{toc}{subsubsection}{formularea1.R}
 
+Modul în care am calculat funcția de masă este manual, cu formula specifică pentru fiecare formulare, iar funcția de repartiție este calculată ca sumă parțială, folosind funcția \texttt{cumsum}.
 
+\begin{lstlisting}[language=R]
+  negative_binomial_pmf_1 <- function(k, r, p) {
+    binomial_coefficient <- choose(k + r - 1, k)
+    probability <- binomial_coefficient * p^r * (1 - p)^k
+    return(probability)
+  }
+  
+  render_plot_1 <- function(r_value, p_value) {
+    renderPlot({
+      r <- r_value()
+      p <- p_value()
+      x <- 0:100
+  
+      pmf_values <- sapply(x, function(k) negative_binomial_pmf_1(k, r, p))
+      cmf_values <- cumsum(pmf_values)
+  
+      df <- data.frame(x = x, pmf = pmf_values, cmf = cmf_values)
+      scaling_factor <- max(df$pmf) / max(df$cmf)
+  
+      render_plot(df, scaling_factor)
+  })
+  }
+\end{lstlisting}
+
+\subsection*{Concluzii}
+\addcontentsline{toc}{subsection}{Concluzii}
+
+Aplicația web dezvoltată folosind Shiny oferă o modalitate interactivă și intuitivă de a explora și înțelege repartiția binomială negativă. Utilizatorii pot vizualiza grafice animate ale funcției de masă (PMF) și funcției de repartiție (CDF), ajustând parametrii precum numărul de succese (r) și probabilitatea de succes (p). Aceste vizualizări dinamice ajută la înțelegerea impactului parametrilor asupra distribuției. Aplicația include și exemple practice din viața reală, cum ar fi testarea produselor până la găsirea unui număr fix de defecte sau numărul de încercări necesare pentru a prinde un anumit număr de pești. Prin această abordare, utilizatorii pot vedea cum repartiția binomială negativă se aplică în diverse contexte, consolidând înțelegerea teoretică și practică a conceptului. Aplicația este un instrument educativ valoros, care combină teoria statistică cu aplicații practice, facilitând învățarea interactivă.
 
 
 
