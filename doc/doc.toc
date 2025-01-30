@@ -2,18 +2,21 @@
 \contentsline {section}{Cerinta II}{7}{}%
 \contentsline {subsection}{Aspecte Teoretice}{7}{}%
 \contentsline {subsection}{Reprezent\u {a}ri Grafice}{8}{}%
-\contentsline {section}{Cerinta III}{9}{}%
-\contentsline {subsection}{Descrierea Problemei}{9}{}%
-\contentsline {subsection}{Aspecte Teoretice}{10}{}%
-\contentsline {subsection}{Reprezent\u {a}ri Grafice}{11}{}%
-\contentsline {subsection}{Pachete Software Folosite}{11}{}%
-\contentsline {subsection}{Codul Aplica\c {t}iei}{12}{}%
-\contentsline {subsubsection}{app.R}{12}{}%
-\contentsline {subsubsection}{ui.R}{12}{}%
-\contentsline {subsubsection}{server.R}{13}{}%
-\contentsline {subsubsection}{utils.R}{14}{}%
-\contentsline {subsubsection}{normals.R}{14}{}%
-\contentsline {paragraph}{Generarea graficelor:}{14}{}%
-\contentsline {subsection}{Dificult\u {a}\c {t}i Întâmpinate}{16}{}%
-\contentsline {subsection}{Probleme Deschise}{16}{}%
-\contentsline {subsection}{Concluzii}{16}{}%
+\contentsline {subsection}{Codul Aplica\c {t}iei}{9}{}%
+\contentsline {subsubsection}{app.R}{10}{}%
+\contentsline {subsubsection}{ui.R}{10}{}%
+\contentsline {section}{Cerinta III}{13}{}%
+\contentsline {subsection}{Descrierea Problemei}{13}{}%
+\contentsline {subsection}{Aspecte Teoretice}{13}{}%
+\contentsline {subsection}{Reprezent\u {a}ri Grafice}{14}{}%
+\contentsline {subsection}{Pachete Software Folosite}{14}{}%
+\contentsline {subsection}{Codul Aplica\c {t}iei}{15}{}%
+\contentsline {subsubsection}{app.R}{15}{}%
+\contentsline {subsubsection}{ui.R}{15}{}%
+\contentsline {subsubsection}{server.R}{16}{}%
+\contentsline {subsubsection}{utils.R}{17}{}%
+\contentsline {subsubsection}{normals.R}{17}{}%
+\contentsline {paragraph}{Generarea graficelor:}{17}{}%
+\contentsline {subsection}{Dificult\u {a}\c {t}i Întâmpinate}{19}{}%
+\contentsline {subsection}{Probleme Deschise}{19}{}%
+\contentsline {subsection}{Concluzii}{19}{}%

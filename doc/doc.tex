@@ -329,20 +329,159 @@ Aplica\c{t}ia ofer\u{a} reprezent\u{a}ri grafice ale func\c{t}iei de mas\u{a} \c
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.8\textwidth]{./img/6.png}
-  \label{fig:imaginea_ta_3}
+  \label{fig:imaginea_ta_6}
 \end{figure}
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.8\textwidth]{./img/7.png}
-  \label{fig:imaginea_ta_3}
+  \label{fig:imaginea_ta_7}
 \end{figure}
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.8\textwidth]{./img/8.png}
-  \label{fig:imaginea_ta_3}
+  \label{fig:imaginea_ta_8}
 \end{figure}
+\newpage
+
+\subsection*{Codul Aplica\c{t}iei}
+\addcontentsline{toc}{subsection}{Codul Aplica\c{t}iei}
+
+Aplicația a fost organizată în mai multe fișiere pentru a separa clar logica și pentru a facilita reutilizarea funcțiilor. Această structurare are ca scop eliminarea redundanței și creșterea clarității codului, permițând adăugarea sau modificarea distribuțiilor fără a perturba structura generală a aplicației.
+\subsubsection*{app.R}
+\addcontentsline{toc}{subsubsection}{app.R}
+
+Fișierul principal \textbf{app.R} conține doar partea de inițializare a aplicației Shiny, inclusiv încărcarea fișierelor \texttt{ui.R} și \texttt{server.R}. Aceasta facilitează gestionarea centralizată a componentelor aplicației.
+Fiecare formulare a Repartiției Negativ Binomiale are propriile fișiere în directorul \texttt{server}, în care sunt definite logicile de generare a graficelor corespunzătoare.
+
+\begin{lstlisting}[language=R]
+  library(shiny)
+  library(bslib)
+  library(ggplot2)
+  
+  source("ui.R")
+  source("server.R")
+  
+  shinyApp(ui = ui, server = server)
+\end{lstlisting}
+
+\subsubsection*{ui.R}
+\addcontentsline{toc}{subsubsection}{ui.R}
+
+Interfața utilizatorului este creată folosind funcția \texttt{fluidPage}, care organizează interfața pe tab-uri, câte unul pentru fiecare formulare a Repartiției Negativ Binomiale. Fiecare tab este generat folosind funcția personalizată \texttt{create\_tab}, care asociază un input specific formularii respective, o zonă de afișare a graficului și situa\c{t}ii ipotetice in care se poate aplica.
+
+\begin{lstlisting}[language=R]
+  create_tab <- function(tab_title, title, img1_src, img2_src, tab_number, 
+                                          titlu_ex_1, ex_1, titlu_ex_2, ex_2) {
+  tabPanel(
+    tab_title,
+    div(
+      class = "container",
+      h1(title),
+      div(
+        class = "d-flex justify-content-center",
+        img(src = img1_src, style = "filter: invert(1);height:4vh;"),
+        img(src = img2_src, style = "filter: invert(1);height:4vh;")
+      ),
+      div(
+        class = "row",
+        div(
+          class = "col-4",
+          tags$h3("Input:"),
+          sliderInput(paste0("r", tab_number), "Numarul de succese (r):", min = 1, 
+                                                      max = 50, value = 10, step = 1),
+          checkboxInput(paste0("fix_r", tab_number), "Fixeaza r", value = TRUE),
+          sliderInput(paste0("p", tab_number), "Probabilitatea de succes (p):", 
+                                        min = 0.01, max = 1, value = 0.5, step = 0.01),
+          checkboxInput(paste0("fix_p", tab_number), "Fixeaza p", value = FALSE)
+        ),
+        div(
+          class = "col-8",
+          h4("Reprezentare Grafica"),
+          div(
+            style = "padding: 10px; margin-bottom: 10px;",
+            plotOutput(outputId = paste0("mass_function_plot_", tab_number)),
+            )
+        )
+      ),
+      div(
+        class = "row",
+        div(
+          class = "col-6",
+          h4(titlu_ex_1),
+          p(ex_1)
+        ),
+        div(
+          class = "col-6",
+          h4(titlu_ex_2),
+          p(ex_2)
+        )
+      )
+    )
+  )
+}
+
+ui <- fluidPage(
+  theme = bs_theme(version = 4, bg = "#101010", fg = "#FFF", primary = "#E69F00", 
+                                                base_font = font_google("Inconsolata")),
+  navbarPage(
+    "Repartitia Negativ Binomiala",
+    create_tab(
+              "Formularea 1",
+              "Numarul de esecuri inainte de a obtine un numar fix de succese (r)", 
+              "https://wikimedia.org/api/rest_v1/media/math/render/svg/1a26b86be5f2...",
+              "https://wikimedia.org/api/rest_v1/media/math/render/svg/29944ccb6e33...",
+              1,
+              "Testarea produselor pana la gasirea unui numar fix de defecte",
+              "O companie produce componente electronice si doreste sa testeze cate ...",
+              "Numarul de incercari pana la a prinde un numar fix de pesti",
+              "Un pescar merge la pescuit si doreste sa prinda un numar fix de pesti..."),
+    create_tab(
+              "Formularea 2", 
+              "Numarul total de incercari necesare pentru a obtine un numar fix ...",
+              "https://wikimedia.org/api/rest_v1/media/math/render/svg/ccc5e37984e75...",
+              "https://wikimedia.org/api/rest_v1/media/math/render/svg/122b97516ba76...",
+              2,
+              "Testarea medicamentelor pana la obtinerea unui numar fix de ...",
+              "Un cercetator testeaza un nou medicament si doreste sa obtina un numar ...",
+              "Numarul de aruncari ale unui zar pana la obtinerea unui numar fix de sase",
+              "Un jucator arunca un zar si doreste sa obtina un numar fix de sase..."),
+    create_tab(
+              "Formularea 3",
+              "Numarul total de incercari necesare pentru a obtine un numar ...",
+              "https://wikimedia.org/api/rest_v1/media/math/render/svg/ccc5e37984e...",
+              "https://wikimedia.org/api/rest_v1/media/math/render/svg/7fd538f62a6...",
+              3,
+              "Testarea produselor pana la gasirea unui numar fix de produse neconforme",
+              "Un controlor de calitate testeaza produse si doreste sa gaseasca un ...",
+              "Numarul de intrebari pana la obtinerea unui numar fix de raspunsuri gresite",
+              "Un student raspunde la intrebari si doreste sa obtina un numar fix ...",
+    create_tab(
+              "Formularea 4",
+              "Numarul de succese inainte de a obtine un numar fix de esecuri (r)",
+              "https://wikimedia.org/api/rest_v1/media/math/render/svg/1a26b86be5f...",
+              "https://wikimedia.org/api/rest_v1/media/math/render/svg/5d39d1344ae...",
+              4,
+              "Numarul de clienti satisfacuti inainte de a obtine un numar fix de ...",
+              "Un magazin doreste sa obtina un numar fix de reclamatii de la clienti. ...",
+              "Numarul de lovituri la tinta inainte de a obtine un numar fix de rateuri",
+              "Un sportiv trage la tinta si doreste sa obtina un numar fix de rateuri..."),
+    create_tab(
+              "Formularea 5",
+              "Numarul de succese intr-un numar fix de incercari (n)",
+              "https://wikimedia.org/api/rest_v1/media/math/render/svg/d23e3ebeb017f...",
+              "https://wikimedia.org/api/rest_v1/media/math/render/svg/09ed5ae47e20d...",
+              5,
+              "Numarul de raspunsuri corecte la un test cu un numar fix de intrebari",
+              "Un student raspunde la un test cu un numar fix de intrebari. Fiecare ...",
+              "Numarul de produse conform intr-un lot de dimensiune fixa",
+              "Un lot de produse este testat, iar fiecare produs este un ...")
+    )
+  )
+\end{lstlisting}
+
+
 
 
 
