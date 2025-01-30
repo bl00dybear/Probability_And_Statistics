@@ -268,7 +268,7 @@ ui <- fluidPage(
               "Un lot de produse este testat, iar fiecare produs este un experiment Bernoulli: Succes (produsul este conform, probabilitate p) sau Eșec (produsul este neconform, probabilitate 1 - p).")
     ),
   )
-)
+
 
 server <- function(input, output, session) {
   # Creare reactive pentru fiecare tab
@@ -289,4 +289,4 @@ server <- function(input, output, session) {
   output$mass_function_plot_5 <- render_plot_5(reactive_values5$r_value, reactive_values5$p_value)
 }
 
-shinyApp(ui = ui, server = server)
+shinyApp(ui = ui, server = server, options = list(port = 8080, host = "0.0.0.0"))
