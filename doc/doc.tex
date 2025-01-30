@@ -251,7 +251,108 @@ Se poate observa că o persoană, cu cât ajunge mai departe în etape, cu atât
 \section*{Cerinta II}
 \addcontentsline{toc}{section}{Cerinta II}
 
-\subsection*{Mesaj pentru Sebi: (Pula n-are scoala ca sta sub banca)}
+\subsection*{Descrierea Problemei}
+
+Scopul acestui proiect este de a construi o aplica\c{t}ie web interactiv\u{a} folosind framework-ul \textbf{Shiny} din \textbf{R}, pentru a reprezenta cele 5 formulari ale repartitiei Negativ Binomiale, graficele animate \c{s}i situa\c{t}ii concrete in care se pot aplica aceste formul\u{a}ri. Aplica\c{t}ia permite vizualizarea repartitiei Negativ Binomiale pentru diferite valori ale parametrilor \( r \) \c{s}i \( p \).
+
+\subsection*{Aspecte Teoretice}
+\addcontentsline{toc}{subsection}{Aspecte Teoretice}
+Pentru dezvoltarea aplica\c{t}iei, am utilizat urm\u{a}toarele aspecte teoretice importante:
+\newline
+
+\textbf{Distribuția Negativ Binomială:} Este definită ca o variabilă aleatoare discretă \( X \sim \text{NB}(r, p) \), unde \( r \) reprezintă numărul de succese dorite, iar \( p \) este probabilitatea de succes pentru o singura incercare.
+
+Repartiția Negativ Binomială poate fi definită în mai multe moduri, în funcție de context. Iată cele 5 formulări principale:
+
+\begin{enumerate}
+    \item \textbf{k eșecuri, dat fiind r succese} \\
+    Probabilitatea de a avea \( k \) eșecuri înainte de a obține \( r \) succese:
+    \[
+    f(k; r, p) \equiv \Pr(X = k) = \binom{k + r - 1}{k} p^r (1 - p)^k
+    \]
+    Alternativ:
+    \[
+    f(k; r, p) = \binom{k + r - 1}{r - 1} p^r (1 - p)^k
+    \]
+    Suport: \( k = 0, 1, 2, \dots \)
+
+    \item \textbf{n încercări, dat fiind r succese} \\
+    Probabilitatea de a avea \( n \) încercări pentru a obține \( r \) succese:
+    \[
+    f(n; r, p) \equiv \Pr(X = n) = \binom{n - 1}{r - 1} p^r (1 - p)^{n - r}
+    \]
+    Alternativ:
+    \[
+    f(n; r, p) = \binom{n - 1}{n - r} p^r (1 - p)^{n - r}
+    \]
+    Suport: \( n = r, r + 1, r + 2, \dots \)
+
+    \item \textbf{n încercări, dat fiind r eșecuri} \\
+    Probabilitatea de a avea \( n \) încercări pentru a obține \( r \) eșecuri:
+    \[
+    f(n; r, p) \equiv \Pr(X = n) = \binom{n - 1}{r - 1} p^{n - r} (1 - p)^r
+    \]
+    Alternativ:
+    \[
+    f(n; r, p) = \binom{n - 1}{n - r} p^{n - r} (1 - p)^r
+    \]
+    Suport: \( n = r, r + 1, r + 2, \dots \)
+
+    \item \textbf{k succese, dat fiind r eșecuri} \\
+    Probabilitatea de a avea \( k \) succese înainte de a obține \( r \) eșecuri:
+    \[
+    f(k; r, p) \equiv \Pr(X = k) = \binom{k + r - 1}{k} p^k (1 - p)^r
+    \]
+    Alternativ:
+    \[
+    f(k; r, p) = \binom{k + r - 1}{r - 1} p^k (1 - p)^r
+    \]
+    Suport: \( k = 0, 1, 2, \dots \)
+
+    \item \textbf{k succese, dat fiind n încercări} \\
+    Aceasta este de fapt repartiția binomială, nu cea negativ binomială:
+    \[
+    f(k; n, p) \equiv \Pr(X = k) = \binom{n}{k} p^k (1 - p)^{n - k}
+    \]
+    Alternativ:
+    \[
+    f(k; n, p) = \binom{n}{n - k} p^k (1 - p)^{n - k}
+    \]
+    Suport: \( k = 0, 1, 2, \dots, n \)
+\end{enumerate}
+
+\subsection*{Reprezent\u{a}ri Grafice}
+\addcontentsline{toc}{subsection}{Reprezent\u{a}ri Grafice}
+
+Aplica\c{t}ia ofer\u{a} reprezent\u{a}ri grafice ale func\c{t}iei de mas\u{a} \c{s}i a func\c{t}iilor de reparti\c{t}ie. În cele ce urmeaz\u{a}, vom ilustra cateva capturi de ecran din aplica\c{t}ie.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./img/6.png}
+  \label{fig:imaginea_ta_3}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./img/7.png}
+  \label{fig:imaginea_ta_3}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./img/8.png}
+  \label{fig:imaginea_ta_3}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
 
 \newpage
 
