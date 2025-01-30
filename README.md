@@ -60,7 +60,7 @@ valoriT <- replicate(nrSimulari, simulator())
    approx_E_T <- mean(valoriT)
    hist(valoriT, breaks = 100, main = "Distributia timpilor T", xlab = "T")
    ```
-   - **Rezultat:** $ \text{approx\_E\_T} = 9.51113170988666$
+   - **Rezultat:** $ approx\_E\_T = 9.51113170988666$
    - **Interpretare:** Distribuția lui $ T $ urmează o distribuție exponențială.
 
 [Diagrama 1](/doc/img/1.png)
