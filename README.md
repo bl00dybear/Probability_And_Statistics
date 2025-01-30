@@ -25,7 +25,7 @@
 
 ### Descrierea Problemei
 
-Se consideră o activitate care presupune parcurgerea secvențială a \( n \) etape. Timpul necesar finalizării etapei \( i \) de către o persoană \( A \) este o variabilă aleatoare \( T_i \sim \text{Exp}(\lambda_i) \). După finalizarea etapei \( i \), \( A \) va trece în etapa \( i+1 \) cu probabilitatea \( \alpha_i \) sau va opri lucrul cu probabilitatea \( 1 - \alpha_i \). Fie \( T \) timpul total petrecut de persoana \( A \) în realizarea activității respective.
+Se consideră o activitate care presupune parcurgerea secvențială a $n$ etape. Timpul necesar finalizării etapei $i$ de către o persoană $A$ este o variabilă aleatoare $( T_i \sim \text{Exp}(\lambda_i) )$. După finalizarea etapei $i$, $A$ va trece în etapa $i+1$ cu probabilitatea $\alpha_i$ sau va opri lucrul cu probabilitatea $1 - \alpha_i$ . Fie $T$ timpul total petrecut de persoana $A$ în realizarea activității respective.
 
 ### Simularea în R
 
@@ -50,100 +50,49 @@ simulator <- function() {
 # Simulam 10^6
 valoriT <- replicate(nrSimulari, simulator())
 
-Iată conversia documentului LaTeX în format Markdown (md). Am păstrat structura și conținutul, adaptându-le pentru formatul Markdown.
-
-```markdown
-# Documentație Proiect: Probabilitate și Statistică
-
-**Membri:**  
-- Gheorghe Bogdan-Alexandru  
-- Andrei Cristian-David  
-- Sincari Sebastian-George  
-- Cosor Mihail  
-
-**Data:** Ianuarie 2025  
-
----
-
-## Cuprins
-
-1. [Cerința I](#cerința-i)  
-   1.1 [Descrierea Problemei](#descrierea-problemei)  
-   1.2 [Simularea în R](#simularea-în-r)  
-   1.3 [Rezultate și Interpretări](#rezultate-și-interpretări)  
-2. [Cerința II](#cerința-ii)  
-3. [Cerința III](#cerința-iii)  
-
----
-
-## Cerința I
-
-### Descrierea Problemei
-
-Se consideră o activitate care presupune parcurgerea secvențială a \( n \) etape. Timpul necesar finalizării etapei \( i \) de către o persoană \( A \) este o variabilă aleatoare \( T_i \sim \text{Exp}(\lambda_i) \). După finalizarea etapei \( i \), \( A \) va trece în etapa \( i+1 \) cu probabilitatea \( \alpha_i \) sau va opri lucrul cu probabilitatea \( 1 - \alpha_i \). Fie \( T \) timpul total petrecut de persoana \( A \) în realizarea activității respective.
-
-### Simularea în R
-
-```r
-set.seed(123)
-n <- 100 # Nr etape
-lambda <- runif(n, 0.5, 2) # Rata exp pt fiecare etapa
-alpha <- runif(n-1, 0.8, 1) # Prob trecerii la urmatoarea etapa
-alpha <- c(1, alpha) # Prob ca o persoana sa participe la prima etapa este 100%
-nrSimulari <- 1000000 # Nr simulari
-
-simulator <- function() {
-  Ti <- rexp(n, rate = lambda)  # Timpul pentru fiecare etapa
-  stop_point <- which(runif(n - 1) > alpha[-1])[1]  # Determinam momentul opririi
-  if (!is.na(stop_point)) {
-    return(sum(Ti[1:stop_point])) 
-  } else {
-    return(sum(Ti))
-  }
-}
-
-# Simulam 10^6
-valoriT <- replicate(nrSimulari, simulator())
 ```
 
 ### Rezultate și Interpretări
 
-1. **Aproximarea lui \( E(T) \):**
+**1. Construiți un algoritm în R care simulează $10^6$ valori pentru v.a. $T$ și în baza acestora aproximați $E(T)$. Reprezentați grafic într-o manieră adecvată valorile obținute pentru $T$. Ce puteți spune despre repartiția lui $T$?**
+
    ```r
    approx_E_T <- mean(valoriT)
    hist(valoriT, breaks = 100, main = "Distributia timpilor T", xlab = "T")
    ```
-   - **Rezultat:** \( \text{approx\_E\_T} = 9.51113170988666 \)
-   - **Interpretare:** Distribuția lui \( T \) urmează o distribuție exponențială.
+   - **Rezultat:** $ \text{approx\_E\_T} = 9.51113170988666$
+   - **Interpretare:** Distribuția lui $ T $ urmează o distribuție exponențială.
 
-2. **Calculul exact al lui \( E[T] \):**
+[Diagrama 1](/doc/img/1.png)
+
+2. **Calculul exact al lui $E[T]$:**
    ```r
    exact_E_T <- sum(1 / lambda * cumprod(alpha))
    ```
-   - **Rezultat:** \( \text{exact\_E\_T} = 9.51299920302413 \)
+   - **Rezultat:** $\text{exact\_E\_T} = 9.51299920302413 $
    - **Comparație:** Valoarea exactă este foarte apropiată de cea obținută prin simulare.
 
 3. **Probabilitatea de finalizare:**
    ```r
    prob_finalizare <- mean(valoriT >= sum(1 / lambda))
    ```
-   - **Rezultat:** \( \text{prob\_finalizare} = 0.00004 \)
+   - **Rezultat:** $\text{prob\_finalizare} = 0.00004 $
 
-4. **Probabilitatea de finalizare într-un timp mai mic sau egal cu \( \sigma \):**
+4. **Probabilitatea de finalizare într-un timp mai mic sau egal cu $ \sigma $:**
    ```r
    sigma <- 94
    prob_sigma <- mean(valoriT <= sigma & valoriT >= sum(1 / lambda))
    ```
-   - **Rezultat:** \( \text{prob\_sigma} = 0.000007 \)
+   - **Rezultat:** $\text{prob\_sigma} = 0.000007$
 
 5. **Timpul minim și maxim de finalizare:**
    ```r
    timpMin <- min(valoriT[valoriT >= sum(1 / lambda)])
    timpMax <- max(valoriT[valoriT >= sum(1 / lambda)])
    ```
-   - **Rezultat:** \( \text{timpMin} = 92.0171680316328 \), \( \text{timpMax} = 108.54443085275 \)
+   - **Rezultat:** $timpMin = 92.0171680316328 $, $timpMax = 108.54443085275 $
 
-6. **Probabilitatea de oprire înainte de etapa \( k \):**
+6. **Probabilitatea de oprire înainte de etapa $ k $:**
    ```r
    k <- 5
    PStopK <- mean(sapply(valoriT, function(x) {
@@ -151,13 +100,13 @@ valoriT <- replicate(nrSimulari, simulator())
      else return(FALSE)
    }))
    ```
-   - **Rezultat:** \( \text{PStopK} = 0.284293 \) pentru \( k = 5 \)
+   - **Rezultat:** $\text{PStopK} = 0.284293 $ pentru $ k = 5 $
 
 ---
 
 ## Cerința II
 
-**Mesaj pentru Sebi:** (Pula n-are scoala ca sta sub banca)
+**Mesaj pentru Sebi:** 
 
 ---
 
@@ -199,8 +148,8 @@ Scopul acestui proiect este de a construi o aplicație web interactivă folosind
 
 ### Reprezentări Grafice
 
-![Distribuția Normală](./img/4.png)  
-![Distribuția Exponențială](./img/5.png)
+![Distribuția Normală](/doc/img/4.png)  
+![Distribuția Exponențială](/doc/img/5.png)
 
 ### Pachete Software Folosite
 
