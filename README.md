@@ -170,11 +170,10 @@ Scopul acestui proiect este de a construi o aplicație web interactivă folosind
 ### Aspecte Teoretice
 
 - **Distribuția Normală:**  
+  $( X \sim N(\mu, \sigma^2) )$  
 ```math
-  \( X \sim N(\mu, \sigma^2) \)  
-  \[
   F(x) = P(X \leq x) = \int_{-\infty}^{x} \frac{1}{\sqrt{2\pi \sigma^2}} e^{-\frac{(t - \mu)^2}{2\sigma^2}} \, dt
-  \]
+  
 ```
 - **Distribuția Exponențială:**  
   \( X \sim \text{Exp}(\lambda) \)  
