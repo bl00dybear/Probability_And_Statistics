@@ -67,6 +67,7 @@ alpha <- runif(n-1, 0.8, 1) # Prob trecerii la urmatoarea etapa
 alpha <- c(1, alpha) # Prob ca o persoana sa participe la prima etapa este 100%
 nrSimulari <- 1000000 # Nr simulari
 
+
 simulator <- function() {
   Ti <- rexp(n, rate = lambda)  # Timpul pentru fiecare etapa
 
