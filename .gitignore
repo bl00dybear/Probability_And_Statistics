@@ -1,3 +1,5 @@
-
-/.idea
-.Rproj.user
+# Fisiere si foldere specifice R care ar trebui ignorate
+.RData
+.Rhistory
+*.Rproj
+.Rproj.user/

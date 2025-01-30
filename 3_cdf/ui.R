@@ -1,3 +1,5 @@
+source("server/server.R")
+
 create_tab <- function(tab_title, title, distribution) {
   tabPanel(
     tab_title,
