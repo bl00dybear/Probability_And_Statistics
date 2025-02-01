@@ -66,26 +66,24 @@ std_normal_server <- function(input, output, session) {
         main = "Funcția de repartiție pentru X^2 ~ N(0, 1)"
       )
     } else if (var == "var4") {
-      n <- input$std_normal_n
-      X <- rnorm(n, mean = 0, sd = 1)
-      S_n <- cumsum(X)
+      x <- seq(-4, 4, length.out = 500)
+      cdf_values <- pnorm(x, mean = 0, sd = n)
       plot(
-        1:n, S_n,
+        x, cdf_values,
         type = "l",
-        lwd = 2,
+        lwd = 4,
         col = "#FF9900",
         xlab = "n",
         ylab = "\u2211 X_i",
         main = "Suma cumulativă a variabilelor aleatoare X_i"
       )
     } else if (var == "var5") {
-      n <- input$std_normal_n
-      X <- rnorm(n, mean = 0, sd = 1)
-      S_n2 <- cumsum(X^2)
+      x <- seq(-4, 4, length.out = 500)
+      cdf_values <- pnorm(x^2, mean = 0, sd = n)
       plot(
-        1:n, S_n2,
+        x, cdf_values,
         type = "l",
-        lwd = 2,
+        lwd = 4,
         col = "#33CC33",
         xlab = "n",
         ylab = "\u2211 X_i^2",
