@@ -1,7 +1,15 @@
 \contentsline {section}{Cerinta I}{2}{}%
+\contentsline {subsection}{Descrierea Problemei}{2}{}%
+\contentsline {subsection}{Exercitiul 1}{2}{}%
+\contentsline {subsection}{Exercitiul 2}{3}{}%
+\contentsline {subsection}{Exercitiul 3}{3}{}%
+\contentsline {subsection}{Exercitiul 4}{4}{}%
+\contentsline {subsection}{Exercitiul 5}{4}{}%
+\contentsline {subsection}{Exercitiul 6}{4}{}%
 \contentsline {section}{Cerinta II}{7}{}%
 \contentsline {subsection}{Aspecte Teoretice}{7}{}%
 \contentsline {subsection}{Reprezent\u {a}ri Grafice}{8}{}%
+<<<<<<< HEAD
 \contentsline {section}{Cerinta III}{9}{}%
 \contentsline {subsection}{Descrierea Problemei}{9}{}%
 \contentsline {subsection}{Aspecte Teoretice}{10}{}%
@@ -18,3 +26,26 @@
 \contentsline {subsection}{Dificult\u {a}\c {t}i Întâmpinate}{17}{}%
 \contentsline {subsection}{Probleme Deschise}{17}{}%
 \contentsline {subsection}{Concluzii}{17}{}%
+=======
+\contentsline {subsection}{Codul Aplica\c {t}iei}{9}{}%
+\contentsline {subsubsection}{app.R}{10}{}%
+\contentsline {subsubsection}{ui.R}{10}{}%
+\contentsline {subsubsection}{server.R}{12}{}%
+\contentsline {subsubsection}{formularea1.R}{12}{}%
+\contentsline {subsection}{Concluzii}{13}{}%
+\contentsline {section}{Cerinta III}{14}{}%
+\contentsline {subsection}{Descrierea Problemei}{14}{}%
+\contentsline {subsection}{Aspecte Teoretice}{14}{}%
+\contentsline {subsection}{Reprezent\u {a}ri Grafice}{15}{}%
+\contentsline {subsection}{Pachete Software Folosite}{15}{}%
+\contentsline {subsection}{Codul Aplica\c {t}iei}{16}{}%
+\contentsline {subsubsection}{app.R}{16}{}%
+\contentsline {subsubsection}{ui.R}{16}{}%
+\contentsline {subsubsection}{server.R}{17}{}%
+\contentsline {subsubsection}{utils.R}{18}{}%
+\contentsline {subsubsection}{normals.R}{18}{}%
+\contentsline {paragraph}{Generarea graficelor:}{18}{}%
+\contentsline {subsection}{Dificult\u {a}\c {t}i Întâmpinate}{20}{}%
+\contentsline {subsection}{Probleme Deschise}{20}{}%
+\contentsline {subsection}{Concluzii}{20}{}%
+>>>>>>> bcbfc440a6c9fb720dcac170451bbe57a0d2c11b

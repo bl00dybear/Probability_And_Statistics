@@ -83,30 +83,37 @@ normal_server <- function(input, output, session) {
       )
     } else if (var == "var4") {
       n <- input$normal_n
-      X <- rnorm(n, mean = input$normal_mu, sd = input$normal_sigma)
-      S_n <- cumsum(X)
-      plot(
-        1:n, S_n,
-        type = "l",
-        lwd = 2,
-        col = "#FF9900",
-        xlab = "n",
-        ylab = "\u2211 X_i",
-        main = "Suma cumulativă a variabilelor aleatoare X_i"
-      )
+      mu <- input$normal_mu   # Media individuală
+      sigma <- input$normal_sigma  # Deviația standard individuală
+
+      # Parametrii lui X = sum(X_i)
+      mu_X <- n * mu
+      sigma_X <- sqrt(n * sigma^2)
+
+      # Generăm valori pentru x
+      x_values <- seq(mu_X - 4*sigma_X, mu_X + 4*sigma_X, length.out = 100)
+
+      # Calculăm CDF-ul
+      cdf_values <- pnorm(x_values, mean = mu_X, sd = sigma_X)
+
+      # Afișăm graficul CDF
+      plot(x_values, cdf_values, type = "l", col = "blue", lwd = 2,
+           main = "Funcția de repartiție cumulativă (CDF)",
+           xlab = "x", ylab = "F_X(x)")
     } else if (var == "var5") {
       n <- input$normal_n
-      X <- rnorm(n, mean = input$normal_mu, sd = input$normal_sigma)
-      S_n2 <- cumsum(X^2)
-      plot(
-        1:n, S_n2,
-        type = "l",
-        lwd = 2,
-        col = "#33CC33",
-        xlab = "n",
-        ylab = "\u2211 X_i^2",
-        main = "Suma cumulativă a pătratelor variabilelor X_i"
-      )
+      mu <- input$normal_mu
+      sigma <- input$normal_sigma
+
+      lambda <- n * (mu / sigma)^2
+
+      x_values <- seq(0, qchisq(0.999, df = n, ncp = lambda), length.out = 100)
+
+      cdf_values <- pchisq(x_values, df = n, ncp = lambda)
+
+      plot(x_values, cdf_values, type = "l", col = "blue", lwd = 2,
+           main = "Funcția de repartiție cumulativă (CDF) - Chi-pătrat non-central",
+           xlab = "x", ylab = "F_X(x)")
     }
   })
 }

@@ -74,17 +74,16 @@ exponential_server <- function(input, output, session) {
       )
     } else if (var == "var4") {
       n <- input$exponential_n
-      X <- rexp(n, rate = input$exponential_lambda)
-      S_n <- cumsum(X)
-      plot(
-        1:n, S_n,
-        type = "l",
-        lwd = 2,
-        col = "#FF9900",
-        xlab = "n",
-        ylab = "\u2211 X_i",
-        main = "Suma cumulativă a variabilelor aleatoare X_i"
-      )
+      lambda <- input$exponential_lambda
+      theta <- 1 / lambda
+
+      x_values <- seq(0, qgamma(0.999, shape = n, scale = theta), length.out = 100)
+
+      cdf_values <- pgamma(x_values, shape = n, scale = theta)
+
+      plot(x_values, cdf_values, type = "l", col = "blue", lwd = 2,
+           main = "Funcția de repartiție cumulativă (CDF) - Gamma",
+           xlab = "x", ylab = "F_X(x)")
     }
   })
 }
