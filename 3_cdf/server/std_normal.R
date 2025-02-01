@@ -67,30 +67,23 @@ std_normal_server <- function(input, output, session) {
       )
     } else if (var == "var4") {
       n <- input$std_normal_n
-      X <- rnorm(n, mean = 0, sd = 1)
-      S_n <- cumsum(X)
-      plot(
-        1:n, S_n,
-        type = "l",
-        lwd = 2,
-        col = "#FF9900",
-        xlab = "n",
-        ylab = "\u2211 X_i",
-        main = "Suma cumulativă a variabilelor aleatoare X_i"
-      )
+      x_values <- seq(-4*sqrt(n), 4*sqrt(n), length.out = 1000)
+
+      cmf_values <- pnorm(x_values, mean = 0, sd = sqrt(n))
+
+      plot(x_values, cmf_values, type = "l", col = "blue", lwd = 2,
+           main = bquote("Funcția de repartiție a lui" ~ N(0, sqrt(n))),
+           xlab = "Valori ale lui X", ylab = "F(X) = P(X ≤ x)", cex.main = 1.2, cex.lab = 1.1)
     } else if (var == "var5") {
       n <- input$std_normal_n
-      X <- rnorm(n, mean = 0, sd = 1)
-      S_n2 <- cumsum(X^2)
-      plot(
-        1:n, S_n2,
-        type = "l",
-        lwd = 2,
-        col = "#33CC33",
-        xlab = "n",
-        ylab = "\u2211 X_i^2",
-        main = "Suma cumulativă a pătratelor variabilelor X_i"
-      )
+      x_values <- seq(0, 4*n, length.out = 1000)
+
+      cmf_values <- pchisq(x_values, df = n)
+
+      plot(x_values, cmf_values, type = "l", col = "blue", lwd = 2,
+           main = bquote("Funcția de repartiție a lui" ~ chi^2(.(n))),
+           xlab = "Valori ale lui X", ylab = "F(X) = P(X ≤ x)",
+           cex.main = 1.2, cex.lab = 1.1)
     }
   })
 }
