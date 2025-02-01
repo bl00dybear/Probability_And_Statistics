@@ -555,13 +555,6 @@ Modul în care am calculat funcția de masă este manual, cu formula specifică 
 \addcontentsline{toc}{subsection}{Concluzii}
 
 Aplicația web dezvoltată folosind Shiny oferă o modalitate interactivă și intuitivă de a explora și înțelege repartiția binomială negativă. Utilizatorii pot vizualiza grafice animate ale funcției de masă (PMF) și funcției de repartiție (CDF), ajustând parametrii precum numărul de succese (r) și probabilitatea de succes (p). Aceste vizualizări dinamice ajută la înțelegerea impactului parametrilor asupra distribuției. Aplicația include și exemple practice din viața reală, cum ar fi testarea produselor până la găsirea unui număr fix de defecte sau numărul de încercări necesare pentru a prinde un anumit număr de pești. Prin această abordare, utilizatorii pot vedea cum repartiția binomială negativă se aplică în diverse contexte, consolidând înțelegerea teoretică și practică a conceptului. Aplicația este un instrument educativ valoros, care combină teoria statistică cu aplicații practice, facilitând învățarea interactivă.
-
-
-
-
-
-
-
 \newpage
 
 \section*{Cerinta III}
@@ -572,9 +565,6 @@ Aplicația web dezvoltată folosind Shiny oferă o modalitate interactivă și i
 
 Scopul acestui proiect este de a construi o aplica\c{t}ie web interactiv\u{a} folosind framework-ul \textbf{Shiny} din \textbf{R}, pentru a reprezenta grafic func\c{t}iile de reparti\c{t}ie (CDF) ale unor variabile aleatoare definite conform cerin\c{t}ei din enun\c{t}. Aplica\c{t}ia permite vizualizarea CDF-urilor pentru distribu\c{t}ii normale, exponen\c{t}iale, binomiale, Poisson.
 
-\subsection*{Aspecte Teoretice}
-\addcontentsline{toc}{subsection}{Aspecte Teoretice}
-Pentru dezvoltarea aplica\c{t}iei, am utilizat urm\u{a}toarele aspecte teoretice importante:
 
 \subsection*{Aspecte Teoretice}
 \addcontentsline{toc}{subsection}{Aspecte Teoretice}
@@ -598,6 +588,14 @@ Pentru dezvoltarea aplica\c{t}iei, am utilizat urm\u{a}toarele aspecte teoretice
     \item Varianța sumei: $\text{Var}(X) = n\sigma^2$
   \end{itemize}
 
+  \textbf{Obs:}
+
+  Daca $X_i \sim N(0,1)$, atunci:
+  \[
+  X = \sum_{i=1}^{n} X_i \sim N(0, \sqrt{n})
+  \]
+
+
   \textbf{Suma pătratelor variabilelor normale}:  
   Considerând $X_i \sim N(\mu, \sigma^2)$, suma pătratelor acestora urmează o distribuție $\chi^2$ non-centrală:
   \[
@@ -608,6 +606,13 @@ Pentru dezvoltarea aplica\c{t}iei, am utilizat urm\u{a}toarele aspecte teoretice
     \item $\lambda = n \cdot \left( \frac{\mu}{\sigma} \right)^2$ este parametrul de non-centralitate.
     \item Dacă $\mu = 0$, atunci $X \sim \chi^2(n)$, adică distribuția $\chi^2$ standard cu $n$ grade de libertate.
   \end{itemize}
+
+  \textbf{Obs:}
+
+  Daca $X_i \sim N(0,1)$, atunci:
+  \[
+  X = \sum_{i=1}^{n} X_i \sim \chi^2(n)
+  \]
 
   \item \textbf{Distribu\c{t}ia Exponen\c{t}ial\u{a}}: O variabil\u{a} aleatoare $X \sim \text{Exp}(\lambda)$ este folosit\u{a} pentru modelarea timpilor de a\c{s}teptare între evenimente.
   \newline
