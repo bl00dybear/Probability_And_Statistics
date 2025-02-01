@@ -368,6 +368,10 @@ Scopul acestui proiect este de a construi o aplica\c{t}ie web interactiv\u{a} fo
 \addcontentsline{toc}{subsection}{Aspecte Teoretice}
 Pentru dezvoltarea aplica\c{t}iei, am utilizat urm\u{a}toarele aspecte teoretice importante:
 
+\subsection*{Aspecte Teoretice}
+\addcontentsline{toc}{subsection}{Aspecte Teoretice}
+Pentru dezvoltarea aplica\c{t}iei, am utilizat urm\u{a}toarele aspecte teoretice importante:
+
 \begin{itemize}
   \item \textbf{Distribu\c{t}ia Normal\u{a}}: Este definit\u{a} ca o variabil\u{a} aleatoare continu\u{a} $X \sim N(\mu, \sigma^2)$, unde $\mu$ reprezint\u{a} media, iar $\sigma^2$ varian\c{t}a.
   \newline
@@ -375,6 +379,27 @@ Pentru dezvoltarea aplica\c{t}iei, am utilizat urm\u{a}toarele aspecte teoretice
   \[
   F(x) = P(X \leq x) = \int_{-\infty}^{x} \frac{1}{\sqrt{2\pi \sigma^2}} e^{-\frac{(t - \mu)^2}{2\sigma^2}} \, dt
   \]
+
+  \textbf{Suma variabilelor normale}:  
+  Dacă $X_1, X_2, ..., X_n \sim N(\mu, \sigma^2)$ sunt variabile aleatoare independente și identic distribuite, atunci suma lor:
+  \[
+  X = \sum_{i=1}^{n} X_i \sim N(n\mu, n\sigma^2)
+  \]
+  \begin{itemize}
+    \item Media sumei: $E(X) = n\mu$
+    \item Varianța sumei: $\text{Var}(X) = n\sigma^2$
+  \end{itemize}
+
+  \textbf{Suma pătratelor variabilelor normale}:  
+  Considerând $X_i \sim N(\mu, \sigma^2)$, suma pătratelor acestora urmează o distribuție $\chi^2$ non-centrală:
+  \[
+  X = \sum_{i=1}^{n} X_i^2 \sim \chi^2(n, \lambda)
+  \]
+  unde:
+  \begin{itemize}
+    \item $\lambda = n \cdot \left( \frac{\mu}{\sigma} \right)^2$ este parametrul de non-centralitate.
+    \item Dacă $\mu = 0$, atunci $X \sim \chi^2(n)$, adică distribuția $\chi^2$ standard cu $n$ grade de libertate.
+  \end{itemize}
 
   \item \textbf{Distribu\c{t}ia Exponen\c{t}ial\u{a}}: O variabil\u{a} aleatoare $X \sim \text{Exp}(\lambda)$ este folosit\u{a} pentru modelarea timpilor de a\c{s}teptare între evenimente.
   \newline
@@ -387,6 +412,16 @@ Pentru dezvoltarea aplica\c{t}iei, am utilizat urm\u{a}toarele aspecte teoretice
   \end{cases}
   \]
 
+  \textbf{Suma variabilelor exponențiale}:  
+  Dacă $X_1, X_2, ..., X_n \sim \text{Exp}(\lambda)$ sunt variabile aleatoare independente, atunci suma lor:
+  \[
+  X = \sum_{i=1}^{n} X_i \sim \text{Gamma}(n, \lambda)
+  \]
+  \begin{itemize}
+    \item Media sumei: $E(X) = \frac{n}{\lambda}$
+    \item Varianța sumei: $\text{Var}(X) = \frac{n}{\lambda^2}$
+  \end{itemize}
+
   \item \textbf{Distribu\c{t}ia Poisson}: Reprezint\u{a} num\u{a}rul de evenimente într-un interval fix de timp \c{s}i este notat\u{a} $X \sim \text{Poisson}(\lambda)$.
   \newline
   Formula funcției de repartiție cumulativă:
@@ -394,12 +429,33 @@ Pentru dezvoltarea aplica\c{t}iei, am utilizat urm\u{a}toarele aspecte teoretice
   F(x) = P(X \leq x) = \sum_{k=0}^{\lfloor x \rfloor} \frac{\lambda^k e^{-\lambda}}{k!}
   \]
 
+  \textbf{Suma variabilelor Poisson}:  
+  Dacă $X_1, X_2, ..., X_n \sim \text{Poisson}(\lambda)$ sunt variabile aleatoare independente, atunci suma lor:
+  \[
+  X = \sum_{i=1}^{n} X_i \sim \text{Poisson}(n\lambda)
+  \]
+  \begin{itemize}
+    \item Media sumei: $E(X) = n\lambda$
+    \item Varianța sumei: $\text{Var}(X) = n\lambda$
+  \end{itemize}
+
   \item \textbf{Distribu\c{t}ia Binomial\u{a}}: Este definit\u{a} de parametrii $n$ \c{s}i $p$ \c{s}i descrie num\u{a}rul de succese în $n$ experimente independente.
   \newline
   Formula funcției de repartiție cumulativă:
   \[
   F(x) = P(X \leq x) = \sum_{k=0}^{\lfloor x \rfloor} \binom{n}{k} p^k (1 - p)^{n - k}
   \]
+
+  \textbf{Suma variabilelor binomiale}:  
+  Dacă $X_1, X_2, ..., X_m \sim \text{Binomial}(n, p)$ sunt variabile aleatoare independente, atunci suma lor:
+  \[
+  X = \sum_{i=1}^{m} X_i \sim \text{Binomial}(m \cdot n, p)
+  \]
+  \begin{itemize}
+    \item Media sumei: $E(X) = m \cdot n \cdot p$
+    \item Varianța sumei: $\text{Var}(X) = m \cdot n \cdot p (1 - p)$
+  \end{itemize}
+
 \end{itemize}
 
 \newpage
