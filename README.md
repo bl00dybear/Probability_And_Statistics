@@ -324,14 +324,11 @@ Aplicaţia oferă reprezentări grafice ale funcţiei de masă şi a
 funcţiilor de repartiţie. În cele ce urmează, vom ilustra cateva capturi
 de ecran din aplicaţie.
 
-![image](/doc/img/6.png){width="80%"} []{#fig:imaginea_ta_6
-label="fig:imaginea_ta_6"}
+![image](/doc/img/6.png
 
-![image](/doc/img/7.png){width="80%"} []{#fig:imaginea_ta_7
-label="fig:imaginea_ta_7"}
+![image](/doc/img/7.png)
 
-![image](/doc/img/8.png){width="80%"} []{#fig:imaginea_ta_8
-label="fig:imaginea_ta_8"}
+![image](/doc/img/8.png)
 
 ## Codul Aplicaţiei 
 
