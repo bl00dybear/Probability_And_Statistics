@@ -581,9 +581,7 @@ importante:
     $X \sim \text{Exp}(\lambda)$ este folosită pentru modelarea timpilor
     de aşteptare între evenimente. Formula funcției de repartiție
     cumulativă:
-    $$F(x) = P(X \leq x) = 
-      \begin{cases}
-      1 - e^{-\lambda x}, & \text{pentru } x \geq 0 \\
+    $$F(x) = P(X \leq x) =   \begin{cases} 1 - e^{-\lambda x}, & \text{pentru } x \geq 0 \\
       0, & \text{pentru } x < 0
       \end{cases}$$
 
