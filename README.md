@@ -60,8 +60,7 @@ Afișând în histograma valorile obținute în `valoriT` rezultă distribuția
 lui $T$. Se poate observa că reprezentarea grafică a timpiilor $T$
 urmează o distribuție exponențială.
 
-![image](/doc/img/1.png){width="56%"} []{#fig:imaginea_ta
-label="fig:imaginea_ta"}
+![image](/doc/img/1.png)
 
 **Rezultat:**
 
@@ -181,8 +180,7 @@ evenimentul este foarte mic în comparație cu numărul de simulări și că
 se observă că repartiția este uniformă, deoarece pentru alegerea
 valorilor random am folosit `runif`.
 
-![image](/doc/img/2.png){width="56%"} []{#fig:imaginea_ta_2
-label="fig:imaginea_ta_2"}
+![image](/doc/img/2.png)
 
 **Rezultat:**
 
@@ -247,8 +245,7 @@ calculate_PStopBeforeK <- function(valoriT, lambda, alpha, n) {
     
 ```
 
-![image](/doc/img/3.png){width="80%"} []{#fig:imaginea_ta_3
-label="fig:imaginea_ta_3"}
+![image](/doc/img/3.png)
 
 **Observații:**
 
