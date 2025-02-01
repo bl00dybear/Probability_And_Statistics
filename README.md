@@ -133,7 +133,7 @@ A să finalizeze activitatea într-un timp mai mic sau egal cu $\sigma$
 
 ``` {.r language="R"}
 sigma <-94
-    prob_sigma<- mean(valoriT <= sigma & valoriT >= sum(1 / lambda))
+prob_sigma<- mean(valoriT <= sigma & valoriT >= sum(1 / lambda))
 ```
 
 **Explicatii:**
@@ -186,11 +186,11 @@ valorilor random am folosit `runif`.
 
 ``` {.r language="R"}
 timpMax = 108.54443085275
-    timpMin = 92.0171680316328
+timpMin = 92.0171680316328
 ```
 
 **6. În baza simulărilor de la 1. aproximaţi probabilitatea ca persoana
-A să se oprească din lucru înainte de etapa k , unde 1$<$k$\leq$n .
+A să se oprească din lucru înainte de etapa k , unde $1<$ k $\leq$ n .
 Reprezentaţi grafic probabilităţile obţinute într-o manieră
 corespunzătoare. Ce puteţi spune despre repartiţia probabilităţilor
 obţinute?**
@@ -218,8 +218,8 @@ FALSE altfel. Variabila primește media valorilor din lista booleană.
 
 ``` {.r language="R"}
 PstopK = 0.284293  pentru k=5
-    PstopK = 0.51482 pentru k=10
-    PstopK = 0.991332 pentru k=50
+PstopK = 0.51482 pentru k=10
+PstopK = 0.991332 pentru k=50
 ```
 
 ``` {.r language="R"}
